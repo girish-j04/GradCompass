@@ -9,3 +9,7 @@ python-jose[cryptography]==3.3.0
 passlib[bcrypt]==1.7.4
 python-multipart==0.0.6
 python-decouple==3.8  # For environment variables
+google-auth==2.25.2  # Google OAuth
+google-auth-oauthlib==1.1.0
+google-auth-httplib2==0.1.1
+httpx==0.25.2  # For making HTTP requests
