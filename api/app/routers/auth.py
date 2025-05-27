@@ -2,6 +2,7 @@ from datetime import timedelta
 from fastapi import APIRouter, HTTPException, status, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
+import httpx
 from app.models.user import UserCreate, UserLogin, UserResponse, Token, User
 from app.utils.password import verify_password, get_password_hash
 from app.utils.auth import create_access_token, get_current_user
@@ -60,6 +61,55 @@ async def login_user(user_credentials: UserLogin, db: AsyncSession = Depends(get
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect email or password"
         )
+    
+    # Create access token
+    access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
+    access_token = create_access_token(
+        data={"sub": user.email}, expires_delta=access_token_expires
+    )
+    
+    return {"access_token": access_token, "token_type": "bearer"}
+
+@router.post("/google", response_model=Token)
+async def google_auth(token: dict, db: AsyncSession = Depends(get_database)):
+    """Authenticate with Google OAuth token"""
+    google_token = token.get("token")
+    
+    if not google_token:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Google token is required"
+        )
+    
+    # Verify Google token
+    async with httpx.AsyncClient() as client:
+        response = await client.get(
+            f"https://www.googleapis.com/oauth2/v1/userinfo?access_token={google_token}"
+        )
+        
+        if response.status_code != 200:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Invalid Google token"
+            )
+        
+        google_user = response.json()
+    
+    # Check if user exists
+    result = await db.execute(select(User).where(User.email == google_user["email"]))
+    user = result.scalar_one_or_none()
+    
+    if not user:
+        # Create new user from Google data
+        user = User(
+            email=google_user["email"],
+            full_name=google_user.get("name", ""),
+            hashed_password="",  # No password for Google users
+            is_active=True
+        )
+        db.add(user)
+        await db.commit()
+        await db.refresh(user)
     
     # Create access token
     access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
