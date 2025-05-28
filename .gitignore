@@ -3,3 +3,6 @@
 
 # api
 /api/.env
+
+#client
+/client/.env
