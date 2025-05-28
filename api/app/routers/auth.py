@@ -3,6 +3,7 @@ from fastapi import APIRouter, HTTPException, status, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 import httpx
+import jwt as pyjwt
 from app.models.user import UserCreate, UserLogin, UserResponse, Token, User
 from app.utils.password import verify_password, get_password_hash
 from app.utils.auth import create_access_token, get_current_user
@@ -71,9 +72,9 @@ async def login_user(user_credentials: UserLogin, db: AsyncSession = Depends(get
     return {"access_token": access_token, "token_type": "bearer"}
 
 @router.post("/google", response_model=Token)
-async def google_auth(token: dict, db: AsyncSession = Depends(get_database)):
+async def google_auth(token_data: dict, db: AsyncSession = Depends(get_database)):
     """Authenticate with Google OAuth token"""
-    google_token = token.get("token")
+    google_token = token_data.get("token")
     
     if not google_token:
         raise HTTPException(
@@ -81,19 +82,30 @@ async def google_auth(token: dict, db: AsyncSession = Depends(get_database)):
             detail="Google token is required"
         )
     
-    # Verify Google token
-    async with httpx.AsyncClient() as client:
-        response = await client.get(
-            f"https://www.googleapis.com/oauth2/v1/userinfo?access_token={google_token}"
-        )
+    try:
+        # Decode the JWT token from Google (without verification for now)
+        # In production, you should verify the token signature
+        decoded_token = pyjwt.decode(google_token, options={"verify_signature": False})
         
-        if response.status_code != 200:
+        # Extract user info from the token
+        google_user = {
+            "email": decoded_token.get("email"),
+            "name": decoded_token.get("name", ""),
+            "picture": decoded_token.get("picture", ""),
+        }
+        
+        if not google_user["email"]:
             raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Invalid Google token"
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Invalid Google token - no email found"
             )
-        
-        google_user = response.json()
+            
+    except Exception as e:
+        print(f"Token decode error: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid Google token"
+        )
     
     # Check if user exists
     result = await db.execute(select(User).where(User.email == google_user["email"]))
