@@ -5,6 +5,8 @@ import LoginForm from './components/auth/LoginForm';
 import RegisterForm from './components/auth/RegisterForm';
 import DashboardPage from './pages/DashboardPage';
 import HomePage from './pages/HomePage';
+import ProfilePage from './pages/ProfilePage';
+import ProfileSetupWizard from './components/profile/ProfileSetupWizard';
 import './App.css';
 
 // Protected Route Component
@@ -75,6 +77,24 @@ function AppRoutes() {
         element={
           <ProtectedRoute>
             <DashboardPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/profile"
+        element={
+          <ProtectedRoute>
+            <ProfilePage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/profile/setup"
+        element={
+          <ProtectedRoute>
+            <div className="min-h-screen bg-gray-50 py-8">
+              <ProfileSetupWizard />
+            </div>
           </ProtectedRoute>
         }
       />

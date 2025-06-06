@@ -1,6 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import Button from '../components/common/Button';
+import ProfileCompletionBanner from '../components/profile/ProfileCompletionBanner';
 
 const DashboardPage = () => {
   const { user, logout } = useAuth();
@@ -17,7 +19,8 @@ const DashboardPage = () => {
       icon: '👤',
       status: 'Setup Required',
       statusColor: 'bg-yellow-100 text-yellow-800',
-      progress: 0
+      progress: 0,
+      agentType: 'profile_analyzer'
     },
     {
       id: 2,
@@ -26,7 +29,8 @@ const DashboardPage = () => {
       icon: '🏫',
       status: 'Ready',
       statusColor: 'bg-green-100 text-green-800',
-      progress: 0
+      progress: 0,
+      agentType: 'university_matcher'
     },
     {
       id: 3,
@@ -35,7 +39,8 @@ const DashboardPage = () => {
       icon: '📝',
       status: 'Not Started',
       statusColor: 'bg-gray-100 text-gray-800',
-      progress: 0
+      progress: 0,
+      agentType: 'document_helper'
     },
     {
       id: 4,
@@ -44,7 +49,8 @@ const DashboardPage = () => {
       icon: '📚',
       status: 'Not Started',
       statusColor: 'bg-gray-100 text-gray-800',
-      progress: 0
+      progress: 0,
+      agentType: 'exam_planner'
     },
     {
       id: 5,
@@ -53,7 +59,8 @@ const DashboardPage = () => {
       icon: '💰',
       status: 'Not Started',
       statusColor: 'bg-gray-100 text-gray-800',
-      progress: 0
+      progress: 0,
+      agentType: 'finance_planner'
     },
     {
       id: 6,
@@ -62,7 +69,8 @@ const DashboardPage = () => {
       icon: '✈️',
       status: 'Not Started',
       statusColor: 'bg-gray-100 text-gray-800',
-      progress: 0
+      progress: 0,
+      agentType: 'visa_assistant'
     }
   ];
 
@@ -82,22 +90,24 @@ const DashboardPage = () => {
             <div className="flex items-center">
               <div className="flex-shrink-0">
                 <div className="h-8 w-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold text-sm">GC</span>
+                  <span className="text-white font-bold text-sm">GP</span>
                 </div>
               </div>
               <div className="ml-4">
-                <h1 className="text-xl font-semibold text-gray-900">GradCompass</h1>
+                <h1 className="text-xl font-semibold text-gray-900">GradPath</h1>
               </div>
             </div>
             <div className="flex items-center space-x-4">
-              <div className="flex items-center space-x-2">
-                <div className="h-8 w-8 bg-blue-100 rounded-full flex items-center justify-center">
-                  <span className="text-blue-600 font-medium text-sm">
-                    {user?.full_name?.charAt(0) || 'U'}
-                  </span>
+              <Link to="/profile">
+                <div className="flex items-center space-x-2 hover:bg-gray-50 rounded-lg px-3 py-2 transition-colors">
+                  <div className="h-8 w-8 bg-blue-100 rounded-full flex items-center justify-center">
+                    <span className="text-blue-600 font-medium text-sm">
+                      {user?.full_name?.charAt(0) || 'U'}
+                    </span>
+                  </div>
+                  <span className="text-sm font-medium text-gray-700">{user?.full_name}</span>
                 </div>
-                <span className="text-sm font-medium text-gray-700">{user?.full_name}</span>
-              </div>
+              </Link>
               <Button variant="outline" size="sm" onClick={handleLogout}>
                 Logout
               </Button>
@@ -108,6 +118,9 @@ const DashboardPage = () => {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Profile Completion Banner */}
+        <ProfileCompletionBanner />
+
         {/* Welcome Section */}
         <div className="mb-8">
           <h2 className="text-2xl font-bold text-gray-900 mb-2">
@@ -142,7 +155,7 @@ const DashboardPage = () => {
             {agentCards.map((agent) => (
               <div
                 key={agent.id}
-                className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow cursor-pointer"
+                className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow cursor-pointer card-hover"
               >
                 <div className="flex items-start justify-between mb-4">
                   <div className="text-3xl">{agent.icon}</div>
@@ -171,8 +184,18 @@ const DashboardPage = () => {
                   variant={agent.status === 'Ready' ? 'primary' : 'outline'}
                   size="sm"
                   className="w-full"
+                  onClick={() => {
+                    if (agent.status === 'Setup Required') {
+                      // Redirect to profile setup for agents that need profile completion
+                      window.location.href = '/profile/setup';
+                    } else {
+                      // Future: Navigate to agent-specific pages
+                      console.log(`Opening ${agent.agentType} agent...`);
+                    }
+                  }}
                 >
-                  {agent.status === 'Not Started' ? 'Get Started' : 'Continue'}
+                  {agent.status === 'Setup Required' ? 'Complete Profile First' : 
+                   agent.status === 'Not Started' ? 'Get Started' : 'Continue'}
                 </Button>
               </div>
             ))}
