@@ -173,4 +173,3 @@ function FormMultiSelect({
 }
 
 export default FormMultiSelect;
-export { FormMultiSelect };
