@@ -237,7 +237,7 @@ function LandingPage() {
             <p className={`mt-6 text-lg leading-8 ${
               theme === 'dark' ? 'text-mocha-subtext0' : 'text-latte-subtext0'
             }`}>
-              Join thousands of students who have successfully navigated their graduate applications with GradPath.
+              Join thousands of students who have successfully navigated their graduate applications with GradCompass.
             </p>
             <div className="mt-10">
               <Link

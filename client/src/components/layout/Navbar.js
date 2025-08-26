@@ -49,7 +49,7 @@ function Navbar() {
         {/* Logo */}
         <div className="flex lg:flex-1">
           <Link to={user ? "/dashboard" : "/"} className="-m-1.5 p-1.5">
-            <span className="sr-only">GradPath</span>
+            <span className="sr-only">GradCompass</span>
             <div className="flex items-center">
               <div className={`h-8 w-8 rounded-lg bg-gradient-to-br ${
                 theme === 'dark'
@@ -61,7 +61,7 @@ function Navbar() {
               <span className={`ml-2 text-xl font-display font-bold ${
                 theme === 'dark' ? 'text-mocha-text' : 'text-latte-text'
               }`}>
-                GradPath
+                GradCompass
               </span>
             </div>
           </Link>
@@ -225,7 +225,7 @@ function Navbar() {
                     <span className={`ml-2 text-xl font-display font-bold ${
                       theme === 'dark' ? 'text-mocha-text' : 'text-latte-text'
                     }`}>
-                      GradPath
+                      GradCompass
                     </span>
                   </div>
                 </Link>

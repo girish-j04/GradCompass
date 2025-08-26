@@ -9,7 +9,7 @@ from app.models import user, profile as profile_models
 
 # Create FastAPI app
 app = FastAPI(
-    title="GradPath API",
+    title="GradCompass API",
     description="AI-powered graduate application assistant",
     version="1.0.0"
 )
@@ -39,7 +39,7 @@ async def shutdown_db():
 # Health check endpoint
 @app.get("/")
 async def root():
-    return {"message": "GradPath API is running!", "environment": settings.ENVIRONMENT}
+    return {"message": "GradCompass API is running!", "environment": settings.ENVIRONMENT}
 
 @app.get("/health")
 async def health_check():
