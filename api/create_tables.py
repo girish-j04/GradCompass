@@ -14,6 +14,7 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from app.database import engine, Base
 from app.models.user import User
 from app.models.profile import UserProfile, WorkExperience
+from app.models.interview import InterviewSession, InterviewMessage
 
 async def create_tables():
     """Create all tables in the database"""
@@ -32,6 +33,8 @@ async def create_tables():
         print("- users")
         print("- user_profiles") 
         print("- work_experiences")
+        print("- interview_sessions")
+        print("- interview_messages")
         
     except Exception as e:
         print(f"❌ Error creating tables: {e}")
