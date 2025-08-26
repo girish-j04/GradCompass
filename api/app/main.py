@@ -2,10 +2,10 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.config import settings
 from app.database import create_tables, close_database
-from app.routers import auth, profile
+from app.routers import auth, profile, interview
 
 # Import models to register them with SQLAlchemy
-from app.models import user, profile as profile_models
+from app.models import user, profile as profile_models, interview as interview_models
 
 # Create FastAPI app
 app = FastAPI(
@@ -26,6 +26,7 @@ app.add_middleware(
 # Include routers
 app.include_router(auth.router)
 app.include_router(profile.router)
+app.include_router(interview.router)
 
 # Startup and shutdown events
 @app.on_event("startup")

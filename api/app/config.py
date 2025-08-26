@@ -6,6 +6,7 @@ class Settings:
     ALGORITHM: str = config("ALGORITHM", default="HS256")
     ACCESS_TOKEN_EXPIRE_MINUTES: int = config("ACCESS_TOKEN_EXPIRE_MINUTES", default=30, cast=int)
     ENVIRONMENT: str = config("ENVIRONMENT", default="development")
+    GEMINI_API_KEY: str = config("GEMINI_API_KEY")
     
     # CORS settings
     ALLOWED_ORIGINS = [
