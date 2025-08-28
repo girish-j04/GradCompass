@@ -5,6 +5,7 @@ from sqlalchemy.orm import selectinload
 from typing import List
 import json
 import traceback
+import asyncio
 
 from app.models.user import User
 from app.models.profile import UserProfile, WorkExperience
@@ -94,9 +95,17 @@ async def start_interview_session(
         "Are you ready to begin?"
     )
     
-    await save_message(db, interview_session.id, "system", welcome_message)
+    welcome_msg = await save_message(db, interview_session.id, "system", welcome_message)
     
-    return InterviewSessionResponse.from_orm(interview_session)
+    # SOLUTION 1: Fetch the session with messages eagerly loaded
+    result = await db.execute(
+        select(InterviewSession)
+        .options(selectinload(InterviewSession.messages))
+        .where(InterviewSession.id == interview_session.id)
+    )
+    session_with_messages = result.scalar_one()
+    
+    return InterviewSessionResponse.from_orm(session_with_messages)
 
 @router.get("/sessions", response_model=List[InterviewSessionResponse])
 async def get_user_interview_sessions(
@@ -160,126 +169,279 @@ manager = ConnectionManager()
 async def interview_websocket(websocket: WebSocket, session_id: int):
     """WebSocket endpoint for real-time interview"""
     
+    await websocket.accept()
+    print(f"✅ WebSocket connection accepted for session {session_id}")
+    
+    # Initialize variables
+    db = None
+    session = None
+    profile = None
+    interview_service = None
+    current_state = None
+    
     try:
-        await manager.connect(websocket, session_id)
+        # Create database session
+        db = async_session_maker()
+        print(f"📊 Database session created for session {session_id}")
         
-        # Get database session
-        async with async_session_maker() as db:
-            # Verify session exists and get user info
-            result = await db.execute(
-                select(InterviewSession)
-                .where(InterviewSession.id == session_id)
-            )
-            session = result.scalar_one_or_none()
-            
-            if not session:
-                await websocket.send_text(json.dumps({
-                    "type": "error",
-                    "content": "Interview session not found"
-                }))
-                await websocket.close()
-                return
-            
-            # Get user profile
-            profile = await get_user_profile_with_experiences(session.user_id, db)
-            if not profile:
-                await websocket.send_text(json.dumps({
-                    "type": "error", 
-                    "content": "User profile not found"
-                }))
-                await websocket.close()
-                return
-            
-            # Initialize interview service
-            interview_service = VisaInterviewService()
-            current_state = session.session_state
-            
-            # Send welcome message if new session
-            if not current_state:
-                await manager.send_message(session_id, {
-                    "type": "system",
-                    "content": "Welcome! I'm ready to conduct your visa interview. Type 'begin' to start."
-                })
-            
-            while True:
+        # Verify session exists
+        session_result = await db.execute(
+            select(InterviewSession).where(InterviewSession.id == session_id)
+        )
+        session = session_result.scalar_one_or_none()
+        
+        if not session:
+            error_msg = f"❌ Interview session {session_id} not found"
+            print(error_msg)
+            await websocket.send_text(json.dumps({
+                "type": "error",
+                "content": "Interview session not found"
+            }))
+            await websocket.close(code=4004, reason="Session not found")
+            return
+        
+        print(f"✅ Session {session_id} found for user {session.user_id}")
+        
+        # Get user profile with work experiences
+        profile_result = await db.execute(
+            select(UserProfile)
+            .options(selectinload(UserProfile.work_experiences))
+            .where(UserProfile.user_id == session.user_id)
+        )
+        profile = profile_result.scalar_one_or_none()
+        
+        if not profile:
+            error_msg = f"❌ Profile not found for user {session.user_id}"
+            print(error_msg)
+            await websocket.send_text(json.dumps({
+                "type": "error",
+                "content": "User profile not found"
+            }))
+            await websocket.close(code=4004, reason="Profile not found")
+            return
+        
+        print(f"✅ Profile found for user {session.user_id}")
+        
+        # Initialize interview service
+        interview_service = VisaInterviewService()
+        current_state = session.session_state
+        print(f"🎯 Interview service initialized. Has existing state: {current_state is not None}")
+        
+        # Send welcome message
+        welcome_message = {
+            "type": "system",
+            "content": "🎤 Welcome to your visa interview session! I'm ready to conduct your mock interview. Send 'start_interview' when you're ready to begin."
+        }
+        
+        await websocket.send_text(json.dumps(welcome_message))
+        print(f"📤 Welcome message sent to session {session_id}")
+        
+        # Message handling loop
+        message_count = 0
+        while True:
+            try:
+                print(f"⏳ Waiting for message from client (session {session_id})...")
+                
+                # Set a reasonable timeout for receiving messages
                 try:
-                    # Receive message from client
-                    data = await websocket.receive_text()
-                    message_data = json.loads(data)
-                    
-                    if message_data.get("type") == "start_interview":
-                        # Start the interview
+                    message_text = await asyncio.wait_for(
+                        websocket.receive_text(), 
+                        timeout=300  # 5 minutes timeout
+                    )
+                    message_count += 1
+                    print(f"📥 Message #{message_count} received from session {session_id}: {message_text[:100]}...")
+                except asyncio.TimeoutError:
+                    print(f"⏰ Timeout waiting for message from session {session_id}")
+                    await websocket.send_text(json.dumps({
+                        "type": "system",
+                        "content": "Session timeout due to inactivity. Please refresh and try again."
+                    }))
+                    break
+                
+                # Parse message
+                try:
+                    message_data = json.loads(message_text)
+                    message_type = message_data.get("type", "")
+                    print(f"📋 Message type: {message_type}")
+                except json.JSONDecodeError as e:
+                    error_msg = f"❌ Invalid JSON received: {e}"
+                    print(error_msg)
+                    await websocket.send_text(json.dumps({
+                        "type": "error",
+                        "content": "Invalid message format. Please send valid JSON."
+                    }))
+                    continue
+                
+                # Handle different message types
+                if message_type == "start_interview":
+                    print(f"🚀 Starting interview for session {session_id}")
+                    try:
                         result = await interview_service.start_interview(
                             profile, 
                             profile.work_experiences or []
                         )
                         
-                        # Save initial state
+                        # Update session state
                         session.session_state = result["state"]
                         await db.commit()
+                        current_state = result["state"]
                         
                         # Save and send first question
                         await save_message(db, session_id, "question", result["question"])
-                        await manager.send_message(session_id, {
+                        
+                        response_message = {
                             "type": "question",
                             "content": result["question"]
-                        })
+                        }
+                        
+                        await websocket.send_text(json.dumps(response_message))
+                        print(f"❓ First question sent to session {session_id}")
+                        
+                    except Exception as e:
+                        error_msg = f"❌ Error starting interview: {str(e)}"
+                        print(error_msg)
+                        print(f"🔍 Traceback: {traceback.format_exc()}")
+                        await websocket.send_text(json.dumps({
+                            "type": "error",
+                            "content": f"Failed to start interview: {str(e)}"
+                        }))
+                
+                elif message_type == "user_response":
+                    user_response = message_data.get("content", "").strip()
+                    print(f"💬 User response received: '{user_response[:50]}...'")
                     
-                    elif message_data.get("type") == "user_response":
-                        user_response = message_data.get("content", "").strip()
-                        
-                        if not user_response:
-                            continue
-                        
+                    if not user_response:
+                        await websocket.send_text(json.dumps({
+                            "type": "error",
+                            "content": "Empty response received. Please provide an answer."
+                        }))
+                        continue
+                    
+                    if not current_state:
+                        await websocket.send_text(json.dumps({
+                            "type": "error",
+                            "content": "No active interview. Please start the interview first by sending 'start_interview'."
+                        }))
+                        continue
+                    
+                    try:
                         # Save user response
                         await save_message(db, session_id, "response", user_response)
+                        print(f"💾 User response saved to database")
                         
-                        # Process response with interview service
-                        if current_state:
-                            result = await interview_service.process_response(
-                                user_response, 
-                                current_state
-                            )
+                        # Process response
+                        result = await interview_service.process_response(
+                            user_response, 
+                            current_state
+                        )
+                        
+                        # Update session state
+                        session.session_state = result["state"]
+                        current_state = result["state"]
+                        
+                        if result["done"]:
+                            # Interview completed
+                            print(f"🏁 Interview completed for session {session_id}")
+                            session.status = "completed"
+                            session.final_outcome = result["content"]
+                            await db.commit()
                             
-                            # Update session state
-                            session.session_state = result["state"]
+                            await save_message(db, session_id, "final_decision", result["content"])
                             
-                            if result["done"]:
-                                # Interview completed
-                                session.status = "completed"
-                                session.final_outcome = result["content"]
-                                await db.commit()
-                                
-                                await save_message(db, session_id, "final_decision", result["content"])
-                                await manager.send_message(session_id, {
-                                    "type": "final_decision",
-                                    "content": result["content"]
-                                })
-                            else:
-                                # Send next question
-                                await db.commit()
-                                await save_message(db, session_id, "question", result["content"])
-                                await manager.send_message(session_id, {
-                                    "type": "question", 
-                                    "content": result["content"]
-                                })
+                            response_message = {
+                                "type": "final_decision",
+                                "content": result["content"]
+                            }
                             
-                            current_state = result["state"]
+                            await websocket.send_text(json.dumps(response_message))
+                            print(f"🎉 Final decision sent to session {session_id}")
+                            
+                        else:
+                            # Continue interview with next question
+                            await db.commit()
+                            await save_message(db, session_id, "question", result["content"])
+                            
+                            response_message = {
+                                "type": "question", 
+                                "content": result["content"]
+                            }
+                            
+                            await websocket.send_text(json.dumps(response_message))
+                            print(f"❓ Next question sent to session {session_id}")
+                            
+                    except Exception as e:
+                        error_msg = f"❌ Error processing response: {str(e)}"
+                        print(error_msg)
+                        print(f"🔍 Traceback: {traceback.format_exc()}")
+                        await websocket.send_text(json.dumps({
+                            "type": "error",
+                            "content": f"Failed to process your response: {str(e)}"
+                        }))
                 
-                except WebSocketDisconnect:
-                    break
-                except Exception as e:
-                    print(f"Error in WebSocket: {e}")
-                    print(traceback.format_exc())
-                    await manager.send_message(session_id, {
+                elif message_type == "ping":
+                    # Health check
+                    await websocket.send_text(json.dumps({
+                        "type": "pong",
+                        "content": "Connection is alive"
+                    }))
+                    print(f"🏓 Ping/pong for session {session_id}")
+                
+                else:
+                    print(f"❓ Unknown message type received: {message_type}")
+                    await websocket.send_text(json.dumps({
                         "type": "error",
-                        "content": f"An error occurred: {str(e)}"
-                    })
-                    break
+                        "content": f"Unknown message type: {message_type}. Supported types: start_interview, user_response, ping"
+                    }))
+            
+            except WebSocketDisconnect:
+                print(f"👋 WebSocket {session_id} disconnected normally by client")
+                break
+                
+            except Exception as e:
+                error_msg = f"❌ Unexpected error in message loop for session {session_id}: {str(e)}"
+                print(error_msg)
+                print(f"🔍 Traceback: {traceback.format_exc()}")
+                
+                try:
+                    await websocket.send_text(json.dumps({
+                        "type": "error",
+                        "content": f"An unexpected error occurred: {str(e)}"
+                    }))
+                except:
+                    print(f"❌ Failed to send error message to client for session {session_id}")
+                
+                break
     
     except Exception as e:
-        print(f"WebSocket connection error: {e}")
-        print(traceback.format_exc())
+        error_msg = f"❌ WebSocket setup error for session {session_id}: {str(e)}"
+        print(error_msg)
+        print(f"🔍 Traceback: {traceback.format_exc()}")
+        
+        try:
+            await websocket.send_text(json.dumps({
+                "type": "error",
+                "content": f"Connection setup failed: {str(e)}"
+            }))
+        except:
+            print(f"❌ Failed to send setup error message for session {session_id}")
     
     finally:
-        manager.disconnect(session_id)
+        print(f"🧹 Cleaning up WebSocket connection for session {session_id}")
+        
+        # Close database session if it was created
+        if db:
+            try:
+                await db.close()
+                print(f"📊 Database session closed for session {session_id}")
+            except Exception as e:
+                print(f"❌ Error closing database session: {e}")
+        
+        # Close WebSocket connection if still open
+        try:
+            if not websocket.client_state.DISCONNECTED:
+                await websocket.close()
+                print(f"🔌 WebSocket closed for session {session_id}")
+        except Exception as e:
+            print(f"❌ Error closing WebSocket: {e}")
+        
+        print(f"✅ WebSocket cleanup completed for session {session_id}")

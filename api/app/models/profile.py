@@ -1,12 +1,12 @@
 from sqlalchemy import Column, Integer, String, Boolean, DateTime, Text, Float, Date, ForeignKey, JSON
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
-from pydantic import BaseModel, validator
+from pydantic import BaseModel, validator, Field
 from typing import Optional, List
 from datetime import date, datetime
 from app.database import Base
 
-# SQLAlchemy Models
+# SQLAlchemy Models remain the same...
 class UserProfile(Base):
     __tablename__ = "user_profiles"
     
@@ -65,7 +65,7 @@ class WorkExperience(Base):
     # Relationships
     user_profile = relationship("UserProfile", back_populates="work_experiences")
 
-# Pydantic Models for API
+# Pydantic Models for API - Updated with better validation
 class WorkExperienceBase(BaseModel):
     company_name: str
     role: str
@@ -121,6 +121,14 @@ class UserProfileBase(BaseModel):
                 raise ValueError('GPA must be between 0 and 4.0 for 4.0 scale')
             elif gpa_scale == '10.0' and (v < 0 or v > 10.0):
                 raise ValueError('GPA must be between 0 and 10.0 for 10.0 scale')
+            elif v < 0:  # General minimum check if scale is not specified
+                raise ValueError('GPA must be positive')
+        return v
+
+    @validator('gpa_scale')
+    def validate_gpa_scale(cls, v):
+        if v is not None and v not in ['4.0', '10.0']:
+            raise ValueError('GPA scale must be either "4.0" or "10.0"')
         return v
 
     @validator('gre_score')
@@ -147,6 +155,26 @@ class UserProfileBase(BaseModel):
             current_year = datetime.now().year
             if v < 1950 or v > current_year + 10:
                 raise ValueError(f'Graduation year must be between 1950 and {current_year + 10}')
+        return v
+
+    @validator('preferred_countries')
+    def validate_preferred_countries(cls, v):
+        if v is not None and len(v) == 0:
+            raise ValueError('At least one preferred country must be selected')
+        return v
+
+    # Custom validation to ensure at least one test score is provided
+    @validator('ielts_score')
+    def validate_at_least_one_test_score(cls, v, values):
+        gre_score = values.get('gre_score')
+        toefl_score = values.get('toefl_score')
+        ielts_score = v
+        
+        # Only validate if we're in complete profile creation (all required fields present)
+        if values.get('target_degree') and values.get('target_field'):  # Indicates complete profile
+            if not any([gre_score, toefl_score, ielts_score]):
+                raise ValueError('At least one test score (GRE, TOEFL, or IELTS) is required')
+        
         return v
 
 class UserProfileCreate(UserProfileBase):
