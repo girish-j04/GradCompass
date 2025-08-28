@@ -15,6 +15,7 @@ import RegisterPage from './pages/auth/RegisterPage';
 import DashboardPage from './pages/DashboardPage';
 import ProfileSetupPage from './pages/ProfileSetupPage';
 import WorkExperiencePage from './pages/WorkExperiencePage';
+import VisaInterviewPage from './pages/VisaInterviewPage';
 
 // Protected Route Component
 function ProtectedRoute({ children }) {
@@ -58,95 +59,110 @@ function App() {
   return (
     <div className={`min-h-screen transition-colors duration-300 ${
       theme === 'dark' 
-        ? 'bg-gradient-to-br from-mocha-base via-mocha-mantle to-mocha-crust text-mocha-text' 
-        : 'bg-gradient-to-br from-latte-base via-latte-mantle to-latte-crust text-latte-text'
+        ? 'bg-mocha-base text-mocha-text' 
+        : 'bg-latte-base text-latte-text'
     }`}>
       <Router>
         <Navbar />
         
-        <main className="relative">
-          <Routes>
-            {/* Public Routes */}
-            <Route 
-              path="/" 
-              element={
-                <PublicRoute>
-                  <LandingPage />
-                </PublicRoute>
-              } 
-            />
-            <Route 
-              path="/login" 
-              element={
-                <PublicRoute>
-                  <LoginPage />
-                </PublicRoute>
-              } 
-            />
-            <Route 
-              path="/register" 
-              element={
-                <PublicRoute>
-                  <RegisterPage />
-                </PublicRoute>
-              } 
-            />
-            
-            {/* Protected Routes */}
-            <Route 
-              path="/dashboard" 
-              element={
-                <ProtectedRoute>
-                  <DashboardPage />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/profile/setup" 
-              element={
-                <ProtectedRoute>
-                  <ProfileSetupPage />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/profile/work-experience" 
-              element={
-                <ProtectedRoute>
-                  <WorkExperiencePage />
-                </ProtectedRoute>
-              } 
-            />
-            
-            {/* Catch all route */}
-            <Route path="*" element={<Navigate to="/" />} />
-          </Routes>
-        </main>
-
-        {/* Toast Notifications */}
+        <Routes>
+          {/* Public Routes */}
+          <Route 
+            path="/" 
+            element={
+              <PublicRoute>
+                <LandingPage />
+              </PublicRoute>
+            } 
+          />
+          <Route 
+            path="/login" 
+            element={
+              <PublicRoute>
+                <LoginPage />
+              </PublicRoute>
+            } 
+          />
+          <Route 
+            path="/register" 
+            element={
+              <PublicRoute>
+                <RegisterPage />
+              </PublicRoute>
+            } 
+          />
+          
+          {/* Protected Routes */}
+          <Route 
+            path="/dashboard" 
+            element={
+              <ProtectedRoute>
+                <DashboardPage />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/profile/setup" 
+            element={
+              <ProtectedRoute>
+                <ProfileSetupPage />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/profile/work-experience" 
+            element={
+              <ProtectedRoute>
+                <WorkExperiencePage />
+              </ProtectedRoute>
+            } 
+          />
+          
+          {/* Visa Interview Routes */}
+          <Route 
+            path="/visa-interview" 
+            element={
+              <ProtectedRoute>
+                <VisaInterviewPage />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/visa-interview/:sessionId" 
+            element={
+              <ProtectedRoute>
+                <VisaInterviewPage />
+              </ProtectedRoute>
+            } 
+          />
+          
+          {/* Catch all - redirect to appropriate home */}
+          <Route 
+            path="*" 
+            element={<Navigate to="/" replace />} 
+          />
+        </Routes>
+        
+        {/* Toast notifications */}
         <Toaster
           position="top-right"
           toastOptions={{
             duration: 4000,
             style: {
-              background: theme === 'dark' ? '#313244' : '#dce0e8',
+              background: theme === 'dark' ? '#181825' : '#eff1f5',
               color: theme === 'dark' ? '#cdd6f4' : '#4c4f69',
-              borderRadius: '12px',
-              border: theme === 'dark' ? '1px solid #45475a' : '1px solid #acb0be',
-              boxShadow: theme === 'dark' 
-                ? '0 10px 25px rgba(0, 0, 0, 0.3)' 
-                : '0 10px 25px rgba(76, 79, 105, 0.1)',
+              border: `1px solid ${theme === 'dark' ? '#313244' : '#dce0e8'}`,
             },
             success: {
               iconTheme: {
                 primary: theme === 'dark' ? '#a6e3a1' : '#40a02b',
-                secondary: theme === 'dark' ? '#313244' : '#dce0e8',
+                secondary: theme === 'dark' ? '#181825' : '#eff1f5',
               },
             },
             error: {
               iconTheme: {
                 primary: theme === 'dark' ? '#f38ba8' : '#d20f39',
-                secondary: theme === 'dark' ? '#313244' : '#dce0e8',
+                secondary: theme === 'dark' ? '#181825' : '#eff1f5',
               },
             },
           }}
