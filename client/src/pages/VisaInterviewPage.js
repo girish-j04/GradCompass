@@ -21,6 +21,8 @@ function VisaInterviewPage() {
   const [isStarted, setIsStarted] = useState(false);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
+  const connectionAttempted = useRef(false); // Track if we've attempted connection
+  const currentSessionRef = useRef(null); // Track current session to prevent loops
   
   const { sessionId } = useParams();
   const navigate = useNavigate();
@@ -32,12 +34,15 @@ function VisaInterviewPage() {
     messages,
     isConnected,
     loading,
+    connectionError,
+    isConnecting,
     createSession,
     fetchSession,
-    connectWebSocket,
+    connectToSession,
     disconnectWebSocket,
     startInterview,
     sendResponse,
+    sendPing,
     clearSession
   } = useInterviewStore();
 
@@ -46,36 +51,125 @@ function VisaInterviewPage() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  // Initialize session
+  // Initialize session - runs once per sessionId change
   useEffect(() => {
+    let isMounted = true; // Prevent state updates if component unmounts
+    
     const initializeSession = async () => {
       try {
         if (sessionId) {
-          // Load existing session
-          await fetchSession(parseInt(sessionId));
+          console.log('🔍 Loading existing session:', sessionId);
+          if (isMounted) {
+            await fetchSession(parseInt(sessionId));
+          }
         } else {
-          // Create new session
-          const session = await createSession();
-          navigate(`/visa-interview/${session.id}`, { replace: true });
+          console.log('🆕 Creating new session...');
+          if (isMounted) {
+            const session = await createSession();
+            console.log('✅ New session created:', session.id);
+            navigate(`/visa-interview/${session.id}`, { replace: true });
+          }
         }
       } catch (error) {
-        console.error('Failed to initialize session:', error);
+        console.error('❌ Failed to initialize session:', error);
       }
     };
 
     initializeSession();
-  }, [sessionId]);
-
-  // Connect WebSocket when session is ready
-  useEffect(() => {
-    if (currentSession && !isConnected) {
-      connectWebSocket(currentSession.id);
-    }
-
+    
     return () => {
+      isMounted = false;
+    };
+  }, [sessionId]); // Only depend on sessionId, not other state
+
+  // Connect WebSocket when session changes - separate effect with guards
+  useEffect(() => {
+    let isMounted = true;
+    
+    const handleConnection = async () => {
+      // Guard conditions to prevent infinite loops
+      if (!currentSession) {
+        console.log('⏳ No current session yet, waiting...');
+        return;
+      }
+      
+      if (isConnected) {
+        console.log('✅ Already connected, skipping connection attempt');
+        return;
+      }
+      
+      if (isConnecting) {
+        console.log('🔄 Connection in progress, skipping...');
+        return;
+      }
+      
+      // Check if this is the same session we already tried to connect to
+      if (currentSessionRef.current === currentSession.id && connectionAttempted.current) {
+        console.log('🚫 Already attempted connection for this session, skipping...');
+        return;
+      }
+      
+      console.log(`🚀 Initiating connection for session ${currentSession.id}`);
+      
+      // Mark this session as attempted and store reference
+      connectionAttempted.current = true;
+      currentSessionRef.current = currentSession.id;
+      
+      try {
+        if (isMounted) {
+          await connectToSession(currentSession.id);
+        }
+      } catch (error) {
+        console.error('❌ Failed to connect WebSocket:', error);
+        // Reset attempt flag on error to allow retry
+        connectionAttempted.current = false;
+      }
+    };
+
+    handleConnection();
+    
+    return () => {
+      isMounted = false;
+    };
+  }, [currentSession]); // Only depend on currentSession
+
+  // Reset connection attempt flag when session changes
+  useEffect(() => {
+    if (currentSession && currentSessionRef.current !== currentSession.id) {
+      console.log(`🔄 Session changed from ${currentSessionRef.current} to ${currentSession.id}, resetting connection flag`);
+      connectionAttempted.current = false;
+      currentSessionRef.current = null;
+    }
+  }, [currentSession]);
+
+  // Set up ping interval to keep connection alive
+  useEffect(() => {
+    let pingInterval;
+    
+    if (isConnected) {
+      console.log('🏓 Setting up keepalive ping interval');
+      // Send ping every 4 minutes to keep connection alive
+      pingInterval = setInterval(() => {
+        console.log('🏓 Sending keepalive ping...');
+        sendPing();
+      }, 4 * 60 * 1000);
+    }
+    
+    return () => {
+      if (pingInterval) {
+        console.log('🛑 Clearing ping interval');
+        clearInterval(pingInterval);
+      }
+    };
+  }, [isConnected, sendPing]);
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      console.log('🧹 Component unmounting, disconnecting WebSocket');
       disconnectWebSocket();
     };
-  }, [currentSession]);
+  }, [disconnectWebSocket]);
 
   // Handle interview start
   const handleStartInterview = () => {
@@ -100,8 +194,68 @@ function VisaInterviewPage() {
 
   // Handle going back to dashboard
   const handleGoBack = () => {
+    console.log('🔙 Going back to dashboard');
     clearSession();
+    // Reset refs
+    connectionAttempted.current = false;
+    currentSessionRef.current = null;
     navigate('/dashboard');
+  };
+
+  // Connection status indicator
+  const renderConnectionStatus = () => {
+    if (loading) {
+      return (
+        <div className={`flex items-center gap-2 text-sm ${
+          theme === 'dark' ? 'text-mocha-yellow' : 'text-latte-yellow'
+        }`}>
+          <ClockIcon className="w-4 h-4 animate-spin" />
+          Setting up session...
+        </div>
+      );
+    }
+    
+    if (isConnecting) {
+      return (
+        <div className={`flex items-center gap-2 text-sm ${
+          theme === 'dark' ? 'text-mocha-blue' : 'text-latte-blue'
+        }`}>
+          <ClockIcon className="w-4 h-4 animate-pulse" />
+          Connecting...
+        </div>
+      );
+    }
+    
+    if (connectionError) {
+      return (
+        <div className={`flex items-center gap-2 text-sm ${
+          theme === 'dark' ? 'text-mocha-red' : 'text-latte-red'
+        }`}>
+          <ExclamationCircleIcon className="w-4 h-4" />
+          {connectionError}
+        </div>
+      );
+    }
+    
+    if (!isConnected) {
+      return (
+        <div className={`flex items-center gap-2 text-sm ${
+          theme === 'dark' ? 'text-mocha-peach' : 'text-latte-peach'
+        }`}>
+          <ClockIcon className="w-4 h-4 animate-pulse" />
+          Establishing connection...
+        </div>
+      );
+    }
+    
+    return (
+      <div className={`flex items-center gap-2 text-sm ${
+        theme === 'dark' ? 'text-mocha-green' : 'text-latte-green'
+      }`}>
+        <CheckCircleIcon className="w-4 h-4" />
+        Connected and ready
+      </div>
+    );
   };
 
   // Get message styling based on type
@@ -109,62 +263,59 @@ function VisaInterviewPage() {
     switch (messageType) {
       case 'system':
         return {
-          bg: theme === 'dark' ? 'bg-mocha-surface0' : 'bg-latte-surface0',
-          text: theme === 'dark' ? 'text-mocha-subtext1' : 'text-latte-subtext1',
-          icon: ChatBubbleLeftRightIcon,
-          align: 'center'
+          bg: theme === 'dark' ? 'bg-mocha-blue/20' : 'bg-latte-blue/20',
+          text: theme === 'dark' ? 'text-mocha-blue' : 'text-latte-blue',
+          border: theme === 'dark' ? 'border-mocha-blue/30' : 'border-latte-blue/30'
         };
       case 'question':
         return {
-          bg: theme === 'dark' ? 'bg-mocha-blue/20' : 'bg-latte-blue/20',
+          bg: theme === 'dark' ? 'bg-mocha-surface0' : 'bg-latte-surface0',
           text: theme === 'dark' ? 'text-mocha-text' : 'text-latte-text',
-          icon: null,
-          align: 'left'
+          border: theme === 'dark' ? 'border-mocha-surface1' : 'border-latte-surface1'
         };
       case 'response':
         return {
           bg: theme === 'dark' ? 'bg-mocha-mauve/20' : 'bg-latte-mauve/20',
           text: theme === 'dark' ? 'text-mocha-text' : 'text-latte-text',
-          icon: null,
-          align: 'right'
+          border: theme === 'dark' ? 'border-mocha-mauve/30' : 'border-latte-mauve/30'
         };
       case 'final_decision':
         return {
           bg: theme === 'dark' ? 'bg-mocha-green/20' : 'bg-latte-green/20',
-          text: theme === 'dark' ? 'text-mocha-text' : 'text-latte-text',
-          icon: CheckCircleIcon,
-          align: 'center'
+          text: theme === 'dark' ? 'text-mocha-green' : 'text-latte-green',
+          border: theme === 'dark' ? 'border-mocha-green/30' : 'border-latte-green/30'
         };
       default:
         return {
           bg: theme === 'dark' ? 'bg-mocha-surface0' : 'bg-latte-surface0',
           text: theme === 'dark' ? 'text-mocha-text' : 'text-latte-text',
-          icon: null,
-          align: 'left'
+          border: theme === 'dark' ? 'border-mocha-surface1' : 'border-latte-surface1'
         };
     }
   };
 
-  // Loading state
-  if (loading || !currentSession) {
+  // Check if interview is completed
+  const isCompleted = currentSession?.status === 'completed';
+
+  if (loading && !currentSession) {
     return (
-      <div className="flex min-h-screen items-center justify-center">
+      <div className={`min-h-screen flex items-center justify-center ${
+        theme === 'dark' ? 'bg-mocha-base' : 'bg-latte-base'
+      }`}>
         <LoadingSpinner />
       </div>
     );
   }
-
-  const isCompleted = currentSession.status === 'completed';
 
   return (
     <div className={`min-h-screen ${
       theme === 'dark' ? 'bg-mocha-base' : 'bg-latte-base'
     }`}>
       {/* Header */}
-      <div className={`sticky top-0 z-10 backdrop-blur-lg border-b ${
+      <div className={`sticky top-0 z-10 border-b backdrop-blur-lg ${
         theme === 'dark' 
-          ? 'bg-mocha-base/80 border-mocha-surface1/30' 
-          : 'bg-latte-base/80 border-latte-surface1/30'
+          ? 'bg-mocha-base/90 border-mocha-surface1/30' 
+          : 'bg-latte-base/90 border-latte-surface1/30'
       }`}>
         <div className="max-w-4xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
@@ -173,8 +324,8 @@ function VisaInterviewPage() {
                 onClick={handleGoBack}
                 className={`p-2 rounded-lg transition-colors ${
                   theme === 'dark'
-                    ? 'hover:bg-mocha-surface0 text-mocha-text'
-                    : 'hover:bg-latte-surface0 text-latte-text'
+                    ? 'hover:bg-mocha-surface0 text-mocha-subtext1 hover:text-mocha-text'
+                    : 'hover:bg-latte-surface0 text-latte-subtext1 hover:text-latte-text'
                 }`}
               >
                 <ArrowLeftIcon className="w-5 h-5" />
@@ -184,108 +335,59 @@ function VisaInterviewPage() {
                 <h1 className={`text-xl font-semibold ${
                   theme === 'dark' ? 'text-mocha-text' : 'text-latte-text'
                 }`}>
-                  F1 Visa Interview Preparation
+                  F1 Visa Interview
                 </h1>
                 <p className={`text-sm ${
-                  theme === 'dark' ? 'text-mocha-subtext0' : 'text-latte-subtext0'
+                  theme === 'dark' ? 'text-mocha-subtext1' : 'text-latte-subtext1'
                 }`}>
-                  Mock interview session
+                  Session #{currentSession?.id}
                 </p>
               </div>
             </div>
             
-            {/* Connection Status */}
-            <div className="flex items-center gap-2">
-              <div className={`w-2 h-2 rounded-full ${
-                isConnected 
-                  ? theme === 'dark' ? 'bg-mocha-green' : 'bg-latte-green'
-                  : theme === 'dark' ? 'bg-mocha-red' : 'bg-latte-red'
-              }`} />
-              <span className={`text-sm ${
-                theme === 'dark' ? 'text-mocha-subtext0' : 'text-latte-subtext0'
-              }`}>
-                {isConnected ? 'Connected' : 'Connecting...'}
-              </span>
-            </div>
+            {renderConnectionStatus()}
           </div>
         </div>
       </div>
 
-      {/* Chat Container */}
-      <div className="max-w-4xl mx-auto px-6 py-6 pb-32">
-        <AnimatePresence>
-          {/* Messages */}
-          <div className="space-y-4">
-            {messages.map((message, index) => {
-              const styling = getMessageStyling(message.message_type);
-              const Icon = styling.icon;
-              
-              return (
-                <motion.div
-                  key={message.id || index}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3 }}
-                  className={`flex ${
-                    styling.align === 'right' ? 'justify-end' : 
-                    styling.align === 'center' ? 'justify-center' : 'justify-start'
-                  }`}
-                >
-                  <div className={`max-w-3xl rounded-2xl px-6 py-4 ${styling.bg} ${
-                    styling.align === 'center' ? 'text-center' : ''
-                  }`}>
-                    {Icon && (
-                      <div className="flex justify-center mb-2">
-                        <Icon className={`w-5 h-5 ${styling.text}`} />
-                      </div>
-                    )}
-                    
-                    {/* Message Label */}
-                    {message.message_type === 'question' && (
-                      <div className={`text-xs font-medium mb-2 ${
-                        theme === 'dark' ? 'text-mocha-blue' : 'text-latte-blue'
-                      }`}>
-                        Visa Officer
-                      </div>
-                    )}
-                    {message.message_type === 'response' && (
-                      <div className={`text-xs font-medium mb-2 text-right ${
-                        theme === 'dark' ? 'text-mocha-mauve' : 'text-latte-mauve'
-                      }`}>
-                        You
-                      </div>
-                    )}
-                    
-                    <div className={`${styling.text} whitespace-pre-wrap`}>
-                      {message.content}
-                    </div>
-                    
-                    {/* Timestamp */}
-                    <div className={`text-xs mt-2 ${
-                      styling.align === 'right' ? 'text-right' : 
-                      styling.align === 'center' ? 'text-center' : 'text-left'
-                    } ${
-                      theme === 'dark' ? 'text-mocha-subtext1' : 'text-latte-subtext1'
-                    }`}>
-                      {new Date(message.timestamp).toLocaleTimeString()}
-                    </div>
-                  </div>
-                </motion.div>
-              );
-            })}
-            
-            {/* Start Interview Button */}
-            {!isStarted && messages.length > 0 && !isCompleted && (
+      {/* Messages Area */}
+      <div className={`pb-24 px-6 ${isStarted || isCompleted ? 'pt-6' : 'pt-0'}`}>
+        <div className="max-w-4xl mx-auto">
+          <AnimatePresence mode="popLayout">
+            {/* Welcome Card - Only show if not started */}
+            {!isStarted && !isCompleted && (
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="flex justify-center py-8"
+                exit={{ opacity: 0, y: -20 }}
+                className={`text-center py-16 ${
+                  theme === 'dark' ? 'text-mocha-text' : 'text-latte-text'
+                }`}
               >
+                <div className={`w-20 h-20 mx-auto mb-6 rounded-full flex items-center justify-center ${
+                  theme === 'dark' ? 'bg-mocha-blue/20' : 'bg-latte-blue/20'
+                }`}>
+                  <ChatBubbleLeftRightIcon className={`w-10 h-10 ${
+                    theme === 'dark' ? 'text-mocha-blue' : 'text-latte-blue'
+                  }`} />
+                </div>
+                
+                <h2 className="text-2xl font-semibold mb-4">
+                  Ready for Your Mock Interview?
+                </h2>
+                
+                <p className={`text-lg mb-8 max-w-2xl mx-auto ${
+                  theme === 'dark' ? 'text-mocha-subtext0' : 'text-latte-subtext0'
+                }`}>
+                  I'll conduct a realistic F1 visa interview based on your profile. 
+                  Answer questions naturally and get comprehensive feedback to improve your confidence.
+                </p>
+                
                 <button
                   onClick={handleStartInterview}
                   disabled={!isConnected}
-                  className={`px-8 py-3 rounded-xl font-semibold transition-all duration-200 ${
-                    isConnected
+                  className={`px-8 py-3 rounded-xl font-medium transition-all duration-200 ${
+                    isConnected 
                       ? theme === 'dark'
                         ? 'bg-mocha-blue hover:bg-mocha-blue/80 text-white'
                         : 'bg-latte-blue hover:bg-latte-blue/80 text-white'
@@ -299,9 +401,62 @@ function VisaInterviewPage() {
               </motion.div>
             )}
             
+            {/* Messages */}
+            {messages.map((message, index) => {
+              const styling = getMessageStyling(message.message_type);
+              const isUser = message.message_type === 'response';
+              
+              return (
+                <motion.div
+                  key={message.id || index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className={`mb-6 ${isUser ? 'flex justify-end' : ''}`}
+                >
+                  <div className={`max-w-3xl p-6 rounded-xl border ${styling.bg} ${styling.border}`}>
+                    {message.message_type === 'question' && (
+                      <div className={`flex items-center gap-2 mb-3 text-sm font-medium ${
+                        theme === 'dark' ? 'text-mocha-subtext1' : 'text-latte-subtext1'
+                      }`}>
+                        <div className={`w-2 h-2 rounded-full ${
+                          theme === 'dark' ? 'bg-mocha-blue' : 'bg-latte-blue'
+                        }`} />
+                        Visa Officer
+                      </div>
+                    )}
+                    
+                    {message.message_type === 'response' && (
+                      <div className={`flex items-center gap-2 mb-3 text-sm font-medium ${
+                        theme === 'dark' ? 'text-mocha-subtext1' : 'text-latte-subtext1'
+                      }`}>
+                        <div className={`w-2 h-2 rounded-full ${
+                          theme === 'dark' ? 'bg-mocha-mauve' : 'bg-latte-mauve'
+                        }`} />
+                        You
+                      </div>
+                    )}
+                    
+                    <div className={`${styling.text} leading-relaxed`}>
+                      {message.content}
+                    </div>
+                    
+                    {message.message_type === 'final_decision' && (
+                      <div className={`mt-4 pt-4 border-t ${
+                        theme === 'dark' ? 'border-mocha-green/30' : 'border-latte-green/30'
+                      }`}>
+                        <div className={`text-sm font-medium ${styling.text}`}>
+                          🎉 Interview Complete!
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </motion.div>
+              );
+            })}
+            
             <div ref={messagesEndRef} />
-          </div>
-        </AnimatePresence>
+          </AnimatePresence>
+        </div>
       </div>
 
       {/* Input Area - Fixed at bottom */}
@@ -347,35 +502,6 @@ function VisaInterviewPage() {
               </button>
             </form>
           </div>
-        </div>
-      )}
-      
-      {/* Completion Message */}
-      {isCompleted && (
-        <div className="fixed bottom-6 left-6 right-6">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className={`max-w-4xl mx-auto rounded-2xl p-6 text-center ${
-              theme === 'dark' 
-                ? 'bg-mocha-green/20 border border-mocha-green/30' 
-                : 'bg-latte-green/20 border border-latte-green/30'
-            }`}
-          >
-            <CheckCircleIcon className={`w-8 h-8 mx-auto mb-2 ${
-              theme === 'dark' ? 'text-mocha-green' : 'text-latte-green'
-            }`} />
-            <h3 className={`font-semibold mb-2 ${
-              theme === 'dark' ? 'text-mocha-text' : 'text-latte-text'
-            }`}>
-              Interview Completed!
-            </h3>
-            <p className={`text-sm ${
-              theme === 'dark' ? 'text-mocha-subtext0' : 'text-latte-subtext0'
-            }`}>
-              Your mock visa interview has been completed. Review the feedback above.
-            </p>
-          </motion.div>
         </div>
       )}
     </div>
