@@ -1,4 +1,3 @@
-# api/app/main.py - Enhanced with better error handling
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
@@ -6,7 +5,7 @@ import traceback
 import logging
 from app.config import settings
 from app.database import create_tables, close_database
-from app.routers import auth, profile, interview
+from app.routers import auth, profile, interview, cost_research  # Added cost_research import
 
 # Import models to register them with SQLAlchemy
 from app.models import user, profile as profile_models, interview as interview_models
@@ -18,8 +17,8 @@ logger = logging.getLogger(__name__)
 # Create FastAPI app
 app = FastAPI(
     title="GradCompass API",
-    description="AI-powered graduate application assistant",
-    version="1.0.0"
+    description="AI-powered graduate application assistant with comprehensive cost research",
+    version="1.1.0"  # Updated version
 )
 
 # Add CORS middleware with more permissive settings
@@ -60,6 +59,7 @@ async def global_exception_handler(request: Request, exc: Exception):
 app.include_router(auth.router)
 app.include_router(profile.router)
 app.include_router(interview.router)
+app.include_router(cost_research.router)  # Added cost research router
 
 # Startup and shutdown events
 @app.on_event("startup")
@@ -67,6 +67,7 @@ async def startup_db():
     try:
         await create_tables()
         logger.info("Database tables created successfully")
+        logger.info("Cost research service initialized")
     except Exception as e:
         logger.error(f"Failed to create database tables: {e}")
         raise
@@ -78,21 +79,32 @@ async def shutdown_db():
 # Health check endpoint
 @app.get("/")
 async def root():
-    return {"message": "GradCompass API is running!", "environment": settings.ENVIRONMENT}
+    return {
+        "message": "GradCompass API is running!",
+        "version": "1.1.0",
+        "features": [
+            "Profile Management",
+            "Mock Visa Interviews", 
+            "University Matching",
+            "Cost Research & Financial Planning"  # Added new feature
+        ]
+    }
 
-@app.get("/health")
-async def health_check():
-    return {"status": "healthy"}
-
-# CORS preflight handler
-@app.options("/{full_path:path}")
-async def options_handler(request: Request, full_path: str):
-    return JSONResponse(
-        content="OK",
-        headers={
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS, PATCH",
-            "Access-Control-Allow-Headers": "*",
-            "Access-Control-Max-Age": "86400",
+# API status endpoint
+@app.get("/status")
+async def get_api_status():
+    return {
+        "status": "healthy",
+        "services": {
+            "auth": "active",
+            "profile": "active", 
+            "interview": "active",
+            "cost_research": "active"  # Added cost research service status
+        },
+        "endpoints": {
+            "auth": "/auth/*",
+            "profile": "/profile/*",
+            "interview": "/interview/*", 
+            "cost_research": "/cost-research/*"  # Added cost research endpoints
         }
-    )
+    }
