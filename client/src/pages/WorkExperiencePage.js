@@ -21,12 +21,17 @@ import FormTextarea from '../components/ui/FormTextarea';
 const schema = yup.object({
   company_name: yup.string().required('Company name is required'),
   role: yup.string().required('Role is required'),
-  start_date: yup.date().required('Start date is required'),
-  end_date: yup.date().nullable().when('is_current', {
-    is: false,
-    then: (schema) => schema.required('End date is required for past positions'),
-    otherwise: (schema) => schema.nullable(),
-  }),
+  start_date: yup.string().required('Start date is required'),
+  end_date: yup.string()
+    .nullable()
+    .transform((value, originalValue) => {
+      return originalValue === '' ? null : value;
+    })
+    .when('is_current', {
+      is: false,
+      then: (schema) => schema.required('End date is required for past positions'),
+      otherwise: (schema) => schema.nullable(),
+    }),
   is_current: yup.boolean(),
   description: yup.string(),
 });
@@ -65,6 +70,13 @@ function WorkExperiencePage() {
     fetchWorkExperiences();
   }, [fetchWorkExperiences]);
 
+  useEffect(() => {
+    // This will log any validation errors in real-time
+    if (Object.keys(errors).length > 0) {
+      console.log('Form validation errors:', errors);
+    }
+  }, [errors]);
+
   const handleAddNew = () => {
     reset({
       company_name: '',
@@ -98,22 +110,28 @@ function WorkExperiencePage() {
   };
 
   const onSubmit = async (data) => {
-    setLoading(true);
-    try {
-      if (editingExperience) {
-        await updateWorkExperience(editingExperience.id, data);
-      } else {
-        await createWorkExperience(data);
-      }
-      setShowForm(false);
-      setEditingExperience(null);
-      reset();
-    } catch (error) {
-      console.error('Failed to save work experience:', error);
-    } finally {
-      setLoading(false);
+  setLoading(true);
+  try {
+    // Log the data being submitted for debugging
+    console.log('Submitting work experience data:', data);
+    
+    if (editingExperience) {
+      await updateWorkExperience(editingExperience.id, data);
+    } else {
+      await createWorkExperience(data);
     }
-  };
+    setShowForm(false);
+    setEditingExperience(null);
+    reset();
+  } catch (error) {
+    console.error('Failed to save work experience:', error);
+    if (error.response?.data?.detail) {
+      console.error('Validation error details:', error.response.data.detail);
+    }
+  } finally {
+    setLoading(false);
+  }
+};
 
   const formatDate = (dateString) => {
     if (!dateString) return '';
