@@ -215,32 +215,41 @@ class VisaInterviewService:
         current_state["messages"].append(self._serialize_message(human_message))
         
         # Check if interview should continue
-        should_continue = self._should_continue_interview(current_state)
+        state_for_check = {
+            "messages": [self._deserialize_message(msg) for msg in current_state["messages"]],
+            "transcript": current_state["transcript"],
+            "current_question": current_state["current_question"],
+            "summary": current_state.get("summary", ""),
+            "outcome": current_state.get("outcome", ""),
+            "done": current_state.get("done", False)
+        }
+        
+        should_continue = self._should_continue_interview(state_for_check)
         
         if not should_continue:
             # Generate final decision
-            final_decision = self._generate_final_decision(current_state)
+            final_decision = self._generate_final_decision(state_for_check)
             current_state["outcome"] = final_decision
             current_state["done"] = True
             
             return {
-                "type": "final_decision",
-                "content": final_decision,
+                "question": final_decision,
                 "state": current_state,
-                "done": True
+                "done": True,
+                "is_complete": True
             }
         else:
             # Generate next question
-            next_question = self._generate_question(current_state)
+            next_question = self._generate_question(state_for_check)
             current_state["current_question"] = next_question
             
-            # Add AI message to messages (serialize for JSON storage)
+            # Add AI message to state
             ai_message = AIMessage(content=next_question)
             current_state["messages"].append(self._serialize_message(ai_message))
             
             return {
-                "type": "question", 
-                "content": next_question,
+                "question": next_question,
                 "state": current_state,
-                "done": False
+                "done": False,
+                "is_complete": False
             }

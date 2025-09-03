@@ -322,23 +322,24 @@ async def interview_websocket(websocket: WebSocket, session_id: int):
                     try:
                         # Get or generate initial question
                         if current_state:
-                            response = await interview_service.continue_interview(
-                                profile, current_state, ""
-                            )
+                            # Resume existing interview - use process_response with empty content
+                            response = await interview_service.process_response("", current_state)
                         else:
-                            response = await interview_service.start_interview(profile)
+                            # Start new interview 
+                            response = await interview_service.start_interview(profile, profile.work_experiences or [])
                         
                         # Save the question
-                        await save_message(db, session.id, "question", response.content)
+                        await save_message(db, session.id, "question", response["question"])
                         
                         # Update session state
-                        session.session_state = response.state
+                        session.session_state = response["state"]
                         await db.commit()
+
                         
                         # Send the question
                         await websocket.send_text(json.dumps({
                             "type": "question",
-                            "content": response.content
+                            "content": response["question"]
                         }))
                         
                         print(f"✅ Interview started for session {session_id}")
@@ -368,37 +369,33 @@ async def interview_websocket(websocket: WebSocket, session_id: int):
                         await save_message(db, session.id, "response", content)
                         
                         # Get interview service response
-                        response = await interview_service.continue_interview(
-                            profile, session.session_state or {}, content
-                        )
+                        response = await interview_service.process_response(content, session.session_state or {})
                         
                         # Update session state
-                        session.session_state = response.state
+                        session.session_state = response["state"]
                         await db.commit()
                         
                         # Send appropriate response based on interview completion
-                        if response.is_complete:
+                        if response["is_complete"]:
                             # Save final decision
-                            await save_message(db, session.id, "final_decision", response.content)
-                            
-                            # Update session status
+                            await save_message(db, session.id, "final_decision", response["question"])  # was response.content
                             session.status = "completed"
-                            session.final_outcome = response.content
+                            session.final_outcome = response["question"]
                             await db.commit()
                             
                             await websocket.send_text(json.dumps({
                                 "type": "final_decision",
-                                "content": response.content
+                                "content": response["question"]
                             }))
                             
                             print(f"🏁 Interview completed for session {session_id}")
                         else:
                             # Save next question
-                            await save_message(db, session.id, "question", response.content)
+                            await save_message(db, session.id, "question", response["question"])
                             
                             await websocket.send_text(json.dumps({
-                                "type": "question",
-                                "content": response.content
+                                "type": "question", 
+                                "content": response["question"]  # was response.content
                             }))
                             
                             print(f"❓ Next question sent for session {session_id}")
