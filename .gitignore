@@ -11,3 +11,7 @@ __pycache__/
 *.pyc
 
 **/venv
+
+/convert.py
+/gradcompass_university_matcher.ipynb
+/UNIVERSITY_MATCHING_PLAN.md
