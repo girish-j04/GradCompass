@@ -1,0 +1,112 @@
+type_of_degree,degree_bucket
+PhD,doctorate_research
+MFA,masters_design
+MPA,masters_policy
+MPhil,doctorate_research
+Graduate certificate,masters_other
+MIP,masters_other
+Bachelors,masters_other
+MRes,doctorate_research
+MM,masters_other
+MScA,masters_other
+MSC,masters_science
+M.eng,masters_engineering
+AASc,masters_other
+BIT(hons),masters_other
+Phd,doctorate_research
+BA (Hons),masters_other
+MIS,masters_data_analytics
+MBus,masters_business
+MCom,masters_business
+MGM,masters_business
+MEd (Counselling Psychology),masters_other
+MSE,masters_engineering
+Advanced Diploma,masters_other
+MPH,masters_health_edu
+MSc(Eng),masters_other
+MURP,masters_urban_arch
+MEd,masters_health_edu
+M.S,masters_engineering
+MCRP,masters_urban_arch
+MS ARch,masters_other
+LLB,undergraduate
+BSBA,masters_other
+BBA,undergraduate
+MLA,masters_design
+BASc,undergraduate
+ M.Sc.,masters_other
+Graduate Certificate,masters_other
+M.S.,masters_other
+MSA,masters_data_analytics
+MEAE,masters_other
+MDM,masters_other
+Bsc(hons),masters_other
+MIRHR,masters_policy
+B.A.,masters_other
+M.U.R.P.,masters_other
+MArch(Prof),masters_other
+Professional Master,masters_other
+Ontario College Diploma,masters_other
+M.U.C.D.,masters_other
+MEC,masters_other
+MSc ,masters_other
+MEng,masters_engineering
+MS,masters_engineering
+MSc,masters_science
+MBA,masters_business
+MA,masters_humanities
+MArch,masters_urban_arch
+Msc,masters_science
+No information mentioned,masters_other
+MPPGA,masters_other
+MUP,masters_urban_arch
+MSCP,masters_other
+BEng (Hons),masters_other
+M.A,masters_humanities
+MCP,masters_urban_arch
+GrDip,masters_other
+MSEd,masters_health_edu
+Ms,masters_engineering
+MSt,masters_humanities
+MSCS,masters_engineering
+MSPH,masters_health_edu
+M.Mus,masters_other
+MProfEng,masters_other
+PHD,doctorate_research
+Professional Doctorate,masters_other
+Graduate Diploma,masters_other
+MEL,masters_other
+MSF,masters_business
+Masters,masters_other
+MASc,masters_engineering
+Diploma,diploma_certificate
+BS,undergraduate
+BSc (Hons),masters_other
+MDes,masters_design
+MCS,masters_engineering
+BA,undergraduate
+M.Ch.E,masters_other
+MUD,masters_design
+Master,masters_other
+ME,masters_engineering
+MPP,masters_policy
+Certificate,diploma_certificate
+BEng,undergraduate
+BSc,undergraduate
+MEM,masters_other
+MScR,masters_other
+MIT,masters_other
+MPS,masters_other
+MMath,masters_science
+MUXD,masters_design
+BA(hons),masters_other
+MBA/MSE,masters_other
+MSBA,masters_data_analytics
+B.S.,masters_other
+Mdes,masters_design
+BEng(hons),masters_other
+MCMP,masters_other
+LLM,masters_other
+MSW,masters_health_edu
+MScBMC,masters_other
+Bcomp,masters_other

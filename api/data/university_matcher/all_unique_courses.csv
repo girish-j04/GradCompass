@@ -1,0 +1,582 @@
+course_name,application_count
+Computer Science,106472
+Data Science and Data Analytics,18527
+Management Information Systems,18183
+Electrical Engineering,15149
+Industrial Engineering,14843
+Mechanical Engineering,14372
+Business Analytics,14138
+Electrical and Computer Engineering,12288
+Computer Engineering,9313
+Engineering Management Mem,8024
+Information Technology,6876
+Civil Engineering,6123
+Computer and Information Systems,5872
+Software Engineering,3804
+Cybersecurity,3218
+Artificial Intelligence,2581
+Chemical Engineering,2457
+Electrical and Electronics Engineering,2078
+Robotics Technology,1988
+Construction Management,1894
+Biomedical Engineering,1690
+Finance ,1613
+Aerospace Engineering,1556
+Information Studies,1372
+Civil and Environmental Engineering,1201
+Information Science,1146
+Automotive Engineering,1107
+Human Computer Interaction,1102
+Biotechnology,970
+Logistics and Supply Chain Management,966
+Technology Management and Entrepreneurship,941
+Construction Engineering,914
+Engineering Science,871
+Materials Engineering,809
+Mba,771
+Mechatronics Robotics and Automation Engineering,730
+Architecture,688
+Health Information Technology,657
+Computer and Information Sciences General,642
+Telecommunications Engineering and Technology,634
+Analytics and Information Management,593
+Management Science,592
+Project Management,473
+Manufacturing Engineering,471
+Computer Networking and Telecommunications,454
+Public Health,449
+Environmental Engineering,437
+Computational Science,425
+Engineering General,419
+Computing Technology Mct,414
+Energy Systems Engineering,406
+Biomedical Informatics,358
+Systems Engineering,340
+Informatics,338
+Engineering Mechanics,334
+Marketing ,328
+Telecommunications Systems and Networks,281
+Financial Engineering,280
+Aerospace and Mechanical Engineering,259
+Chemical Petroleum,255
+Computer Systems Engineering,246
+Business Administration and Management,241
+Business General,240
+Operations Research,232
+Embedded Systems,216
+Pharmaceutical Sciences,210
+Pharmacy,206
+Algorithms and Machine Learning,200
+Mathematics and Statistics,167
+Chemical and Biomolecular Engineering,166
+Analytics and Modeling,163
+ Financial Management,157
+Biological Biosystems Engineering,155
+Health Informatics and Management Systems,153
+Human Factors and Ergonomics,150
+Drug Discovery and Regulatory Affairs,149
+Game and Interactive Media Design,148
+Financial Mathematics,145
+Machine Tool Technology,142
+Aeronautical Engineering,142
+Environmental Mining,140
+Materials Science ,140
+Health Administration,139
+Operations Management,137
+Economics,122
+Chemistry,122
+Food Science,121
+Statistics,111
+Electrical and Power Engineering,107
+Education,104
+Biology General,101
+Sustainable Energy,101
+Biomedical Sciences,99
+Engineering Design,99
+Urban Community and Regional Planning,97
+Mathematics and Computing,97
+Product Design and Development,94
+Design and Applied Arts,92
+Structural Engineering,92
+Electrical Electronics and Communications Engineering,87
+Petroleum Engineering,87
+Cellular and Molecular Biology,86
+Physics,86
+Communications Systems Technology,85
+Building Construction Technology,83
+Environmental Science,80
+Computer Aided Drafting and Design,76
+Public Policy Analysis,75
+Pharmacology,75
+Biological Science,74
+Electronics Engineering,73
+Health Sciences General,73
+Mathematics,71
+Technology and Innovation,71
+Health Care,70
+Civil and Construction Engineering,69
+Accounting,68
+Landscape Architecture,66
+Engineering and Technology,66
+Technology Innovation and Entrepreneurship,64
+Communication General,64
+Integrated Circuit Design,63
+Chemical and Biological Engineering,63
+Public Administration,62
+Epidemiology,62
+Architectural and Building Sciences Technology,62
+Engineering and Industrial Management,60
+Sustainability Science,60
+Nanotechnology,59
+Music,59
+International Business Management,57
+Game Design and Development,57
+Intelligent Systems,56
+Telecommunications Technology,56
+Psychology,55
+Human Resources Management,54
+Computer Graphics,54
+Urban Studies,54
+Applied Mathematics,52
+Environmental Management,51
+Biochemistry and Molecular Biology,51
+Network and System Administration,51
+Renewable Energy,51
+Pharmacology and Toxicology,50
+Systems and Control,48
+Geomatics and Geographic Information Systems,47
+Mining and Mineral Engineering,44
+Digital Communications and Multimedia,43
+Agricultural Engineering,43
+Family Practice Nurse Practitioner,43
+Drafting and Design Technology,40
+Arts and Entertainment Management,39
+Library and Information Science,38
+Information Technology Project Management,38
+Industrial Design and Technology,38
+Transportation and Highway Engineering,35
+Water Resources Engineering,34
+Biochemistry,34
+Data Analytics and Quantitative Analysis,33
+Exercise Science,33
+Computational Biology,33
+Instructional Design,32
+Food Technology and Processing,31
+International Business,31
+Technical and Scientific Communication,31
+Applied Economics,30
+Management and Business Analytics,30
+Architectural Engineering,29
+Innovation Leadership Engineering Entrepreneurship,29
+Finance and Investment,28
+Science Technology and Society,28
+Modeling Virtual Environments and Simulation,28
+Automation Engineer Technology,27
+Media and Communication,27
+Computational Mathematics,27
+Industrial and Organizational Psychology,26
+International Relations,26
+Design and Visual Communications,26
+Process Engineering,25
+Computer Forensics,25
+Space Systems Operations,25
+Astronomy,25
+Kinesiology,25
+Actuarial Science,25
+Biostatistics,24
+Medicinal and Pharmaceutical Chemistry,24
+Nutrition Sciences,23
+Environmental Engineering Technology,23
+Polymer and Plastics Engineering,22
+Microbiology,21
+Neuroscience,21
+Creative Arts and Practice,21
+Mechanical and Mechatronics Engineering,20
+Plant Sciences,19
+Polymer Chemistry,19
+Enterprise Risk Management,18
+Environmental Studies,18
+Ocean Engineering,18
+Mental Health Counseling,17
+Sports Business and Management,17
+Accountancy,16
+Educational Administration,16
+Forensic Science,16
+Graphic Design,16
+Packaging Science,16
+Applied Physics,16
+Science Technology,16
+Engineering Material,16
+Web Development,15
+Molecular Pharmacology,14
+Geosciences,14
+Sports Science,14
+Urban Planning and Public Administration,14
+Biochemical Engineering,14
+Applied Behavior Analysis,14
+Quality Management Systems,14
+Digital Image Processing,14
+Games and Entertainment Design,14
+Clinical Regulatory Affairs,14
+Counseling Psychology,13
+Manufacturing Engineering Technology,13
+Organizational Behavior Studies,13
+Astrophysics,13
+Environmental Health,13
+Digital Creative Media,12
+Urban Development Planning,12
+Music Technology,12
+Transportation Management,12
+Agriculture General,12
+Geotechnical and Geo Environmental Engineering,12
+Media Studies,11
+Business and Marketing Management,11
+Microbiology and Immunology,11
+Law and Legal Studies,11
+Arts General,11
+New Media Art,11
+Sociology,11
+Physical Education Teaching and Coaching,11
+Mathematics and Computer Science,11
+Medical Informatics,11
+Immunology,11
+Financial Economics,10
+Cognitive Science,10
+Interior Architecture,10
+Sustainability Studies,10
+Digital Arts,10
+Multi  Interdisciplinary Studies General,10
+Complementary Integrative Healthcare,9
+Signal Geospatial Intelligence,9
+Orthotics and Prosthetics,9
+Linguistics,9
+Philosophy,9
+Development Economics and International Development,9
+Molecular Biology,9
+Ecology,9
+Laser and Optical Engineering,9
+Interior Design,9
+Real Estate,9
+Accounting and Finance,8
+Marine and Coastal Sciences,8
+Health and Physical Fitness,8
+Aviation Management,8
+Agronomy and Crop Science,8
+Advertising,8
+Management Studies,8
+Geography,7
+Reading and Writing General,7
+Health Care Leadership,7
+Counselor Education,7
+Business Computing,7
+Development Studies,7
+Toxicology,7
+Clinical Psychology,7
+Foods Nutrition and Wellness Studies,7
+Real Estate Development,7
+Clinical Research,7
+Agribusiness Operations,7
+Genomics,7
+Computational and Medicinal Chemistry,7
+Environment and Sustainability,7
+Organization Development,7
+Commerce,7
+Genetics,7
+Earth Science,7
+Solar Energy Technology,7
+Graphics Visualization and Computational Fabrication,7
+Optics,7
+Higher Education Administration,7
+Applied Life Science,6
+Accounting and Analytics,6
+Cell Biology and Anatomy,6
+Educational Technology,6
+Organizational Leadership,6
+Digital and Social Media Marketing,6
+Automotive Technology,6
+Global Studies,6
+Communication Sciences and Disorders,6
+Textile Sciences and Engineering,6
+Railroad and Railway Transportation,6
+Strategic Management,6
+Film Studies,6
+Metallurgical Engineering,6
+Dental Science,6
+Polymer Engineering,6
+Bachelor of Business Administration,6
+Econometrics and Quantitative Economics,6
+Security Studies,6
+Design Innovation Management,5
+International Studies,5
+Quantum Technologies,5
+Biochemistry Biophysics and Molecular Biology,5
+Music Performance,5
+Animation and Special Effects,5
+Agricultural and Food Products Processing,5
+Energy and Environmental Law,5
+Health Communication,5
+Thermal and Fluid Power Technology,5
+Hospitality Administration and Management,5
+Business and Managerial Economics,5
+Games and Interactivity,5
+Exercise Physiology,5
+Geological Engineering,5
+Maritime Studies,5
+Database Administration Computer Science,5
+Mining Engineering,5
+Biosciences,5
+Humanities,5
+Engineering Physics,5
+Medical Physics,4
+Internet Computing and Network Security,4
+Molecular Biochemistry,4
+Computer Programming General,4
+Political Science,4
+Human Resources Development,4
+Public Health Education,4
+Molecular Medicine,4
+Visual and Performing Arts General,4
+Family and Consumer Sciences,4
+Technology Leadership and Management,4
+Atmospheric Sciences and Meteorology,4
+Architecture and Graphic and Information Design,4
+Innovation Engineering,4
+Social Work,4
+Advanced Manufacturing and Quality Control Technologies Focused On Composition Properties and Integrity of Materials,4
+Operations Project Management,4
+Horticultural Science,4
+Public Relations,4
+Laws,4
+Educational Psychology,4
+Graphic Design and Visualisation,4
+Military Applied Sciences,4
+Multimedia,4
+Urban Education and Leadership,4
+Photography,4
+Health Policy Analysis,4
+Marine Engineering and Naval Architecture,3
+Computational Mechanics With Application To Material Properties,3
+English,3
+Regional Studies,3
+Telecommunications Management,3
+Industrial Technology,3
+Agricultural Economics,3
+Sustainable Business,3
+Power Systems Engineering,3
+Astronautics and Space Engineering,3
+Natural Sciences,3
+Systematic Biology,3
+Journalism,3
+Water Wetlands and Marine Resources Management,3
+Physician Assistance,3
+Criminal Justice,3
+Modern Languages,3
+Ecology and Evolutionary Biology,3
+Technology and International Affairs,3
+Accounting and Taxation,3
+Water Quality and Wastewater Treatment,3
+Game Programming,3
+Environmental Design,3
+Fine and Studio Art,3
+Plant Molecular Biology,3
+Biofabrication and Biomaterials,3
+Race and Ethnicity,3
+Physical Therapy,3
+Religious Studies,3
+Biomedical Technology,3
+Medicine and Surgery(MBBS),3
+Conducting,3
+Knowledge Management,3
+Business and Technology,3
+Banking and Financial Support Services,3
+Dramatics,3
+Geology,3
+It Strategy and Digital Transformation,3
+Electrical Engineering Technology,3
+Communications Technologies,2
+Management Information System Mis,2
+Biometrics,2
+Adult and Technical Education,2
+Human Sciences,2
+International Policy Analysis,2
+Nursing,2
+Clinical Nurse Leader,2
+Recording Arts Technology,2
+Welding Engineering Technology,2
+Business Teacher Education,2
+Molecular Genetics,2
+Rehabilitation Science,2
+Studio Arts,2
+Science and Policy,2
+Wind Energy,2
+Marketing Research,2
+Speech Language Pathology and Audiology,2
+Intellectual Property,2
+Analytical Chemistry,2
+Early Childhood Education,2
+Nonprofit and Non Governmental Organizations,2
+Agricultural Production,2
+Sports Studies,2
+School Psychology,2
+Ecommerce,2
+Teacher Education Multiple Levels,2
+Web Management,2
+Translational Research,2
+Genetic Counseling,2
+Human Nutrition,2
+Occupational Safety and Health Technology,2
+Environmental Policy and Management,2
+Mathematical Statistics and Probability,2
+International Health,2
+Environmental System,2
+Facilities Planning and Management,2
+International Law,2
+Sales and Marketing Education,2
+Machine Shop Technology,2
+Occupational Therapy,2
+Wireless and Optical Communications,2
+Global Sustainable Development,2
+Pharmaceutical Marketing and Management,2
+Database Management,2
+Product Innovation and Computing,2
+Animal Sciences,2
+Fiber Textile and Weaving Arts,2
+Taxation,1
+Executive Management Mba,1
+Clinical and Experimental Therapeutics,1
+Construction Technology,1
+German,1
+Mechanics and Repairers General,1
+Emergency Management Homeland Security,1
+Learning Sciences,1
+Aerospace Education,1
+Hazardous Materials Management and Waste Technology,1
+Earth Systems Environmental Science Technology,1
+Radio and Television Broadcasting Technology,1
+Aerospace Engineering Technology,1
+Broadcast Journalism,1
+Canadian Studies,1
+Operational Oceanography,1
+Culture and Heritage,1
+Pastoral Counseling,1
+Health Technology,1
+French,1
+Computer Science Mathematical Sciences,1
+Developmental Psychology,1
+Health Physics Technology,1
+Architectural Technology,1
+Design and Technical Production,1
+Bioprocess Technology,1
+Games Technology,1
+Health Promotion,1
+Special Education,1
+Curriculum and Instruction,1
+History,1
+Latin American Studies,1
+Anthropology,1
+Engineering Practice,1
+Marine Biology,1
+Microbial Biotechnology,1
+Poultry Science,1
+Environment Sustainability and Society,1
+Plant Pathology,1
+Business Communication,1
+Soil Science,1
+Animal and Veterinary Science,1
+Voice and Opera,1
+Human Development and Family Studies,1
+Environment Resources and Sustainability,1
+Politics and Contemporary History,1
+Social Sciences,1
+Cultural Resource Management,1
+Premedicine,1
+Elementary School Teaching,1
+Fashion Merchandising,1
+Education Administration and Supervision,1
+Creative Industries,1
+Computer Systems Analysis,1
+Digital Learning Education,1
+Theoretical and Mathematical Physics,1
+School Counseling,1
+Computer Software Technology,1
+Anatomy,1
+Community Psychology,1
+Film Production,1
+Community Development,1
+Liberal Arts and Sciences,1
+Research Methodology and Quantitative Methods,1
+Nursing Practice,1
+Global Development and Social Justice Ma,1
+Financial Services Marketing Operations,1
+Advertising Public Relations and Media Design,1
+Publishing,1
+Wood Science and Wood Products Technology,1
+Pathology,1
+Parasitology,1
+Occupational Health and Industrial Hygiene,1
+International Finance,1
+Geophysics and Seismology,1
+Industrial Maintenance Technology,1
+Applied Psychology,1
+Education of The Learning Disabled,1
+Advanced Drug,1
+International Marketing,1
+Marriage and Family Therapy,1
+Labor and Industrial Relations,1
+American Studies,1
+Language Interpretation and Translation,1
+Bba,1
+Furniture Design and Manufacturing,1
+Arts Management and Arts Entrepreneurship,1
+Human Services,1
+Vocational Rehabilitation Counseling,1
+Restaurant and Culinary Management,1
+Psychological Method,1
+Atmospheric Chemistry and Climatology,1
+Biophysics,1
+Acoustics,1
+Art Education,1
+Language Literature and Cultural Studies,1
+Radiography,1
+Health Management and Clinical Assistance,1
+Quantitative Research Methods,1
+Professional Studies,1
+Music Theory and Composition,1
+Law and Business,1
+Vision Science,1
+Forestry,1
+Chemical Education,1
+Community Health and Preventive Medicine,1
+Atomic and Molecular Physics,1
+Educational Instructional and Curriculum Supervision,1
+Air Transportation,1
+Emerging Media,1
+Philosophy and Religious Studies General,1
+Food Preparation,1
+Physical Sciences,1
+Ancient Studies,1
+Theater Arts,1
+Sports and Fitness Administration,1
+Coaching and Talent Development,1
+Event Management,1
+Energy Sources and Systems,1
+Environmental Control Technologies,1
+Land Use Planning,1
+Cognitive Psychology and Psycholinguistics,1
+Culinary Science,1
+Cartography,1
+Applied Biological Sciences,1
+Public Finance,1
+Physiology,1
+Forensic Psychology,1
+Semiconductor Manufacturing Technology,1
+Mobile and Web Application Development,1
+Child Development,1
+Hydrology and Water Resources Science,1
+Greenhouse Management,1
+Plant Genetics,1
+Business Data Analysis and Forecasting,1
+Architectural Drafting,1
+Apparel and Textile Manufacture,1
+Directed Energy Systems,1
+Cell Physiology,1

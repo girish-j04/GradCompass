@@ -1,0 +1,582 @@
+course_name,course_bucket
+Information Technology,humanities_misc
+Materials Engineering,humanities_misc
+Technology Management and Entrepreneurship,humanities_misc
+Mechanical Engineering,humanities_misc
+Construction Management,humanities_misc
+Computing Technology Mct,humanities_misc
+Technology and Innovation,humanities_misc
+Financial Engineering,humanities_misc
+Game and Interactive Media Design,humanities_misc
+Biotechnology,humanities_misc
+Human Resources Management,humanities_misc
+Human Services,humanities_misc
+Engineering Science,humanities_misc
+Vocational Rehabilitation Counseling,humanities_misc
+Biomedical Engineering,humanities_misc
+Chemical and Biomolecular Engineering,humanities_misc
+Pharmacology,humanities_misc
+Food Technology and Processing,humanities_misc
+Algorithms and Machine Learning,humanities_misc
+Engineering General,humanities_misc
+Human Computer Interaction,humanities_misc
+Financial Mathematics,humanities_misc
+Sustainability Science,humanities_misc
+Environmental Management,humanities_misc
+Aerospace Engineering,humanities_misc
+Molecular Medicine,humanities_misc
+Electronics Engineering,humanities_misc
+Urban Education and Leadership,humanities_misc
+Embedded Systems,humanities_misc
+Mathematics and Statistics,humanities_misc
+Health Sciences General,humanities_misc
+International Business Management,humanities_misc
+Environmental Science,humanities_misc
+Atmospheric Sciences and Meteorology,humanities_misc
+Business and Managerial Economics,humanities_misc
+Operations Research,humanities_misc
+Educational Psychology,humanities_misc
+International Relations,humanities_misc
+Engineering and Industrial Management,humanities_misc
+Graphic Design and Visualisation,humanities_misc
+Applied Physics,humanities_misc
+Accounting,business
+Educational Administration,humanities_misc
+Mathematics and Computing,humanities_misc
+Banking and Financial Support Services,humanities_misc
+Water Resources Engineering,humanities_misc
+Applied Economics,humanities_misc
+Industrial Design and Technology,humanities_misc
+Genetics,humanities_misc
+Science Technology,humanities_misc
+Medical Informatics,humanities_misc
+Space Systems Operations,humanities_misc
+Civil and Construction Engineering,humanities_misc
+Reading and Writing General,humanities_misc
+Pharmacology and Toxicology,humanities_misc
+Petroleum Engineering,humanities_misc
+Nursing,humanities_misc
+Public Administration,humanities_misc
+Materials Science ,humanities_misc
+Internet Computing and Network Security,humanities_misc
+Applied Mathematics,humanities_misc
+Media and Communication,humanities_misc
+Biochemistry and Molecular Biology,humanities_misc
+Orthotics and Prosthetics,humanities_misc
+Systems and Control,humanities_misc
+Music Performance,humanities_misc
+Kinesiology,humanities_misc
+Industrial and Organizational Psychology,humanities_misc
+Human Resources Development,humanities_misc
+Electrical and Power Engineering,humanities_misc
+Microbiology and Immunology,humanities_misc
+Forensic Science,humanities_misc
+Environmental Engineering Technology,humanities_misc
+Digital Creative Media,humanities_misc
+Plant Molecular Biology,humanities_misc
+Social Work,humanities_misc
+Pathology,humanities_misc
+Geomatics and Geographic Information Systems,humanities_misc
+Transportation Management,humanities_misc
+Thermal and Fluid Power Technology,humanities_misc
+Mathematical Statistics and Probability,humanities_misc
+Biofabrication and Biomaterials,humanities_misc
+Financial Economics,humanities_misc
+Philosophy,humanities_misc
+Environmental Health,humanities_misc
+Geology,humanities_misc
+Organizational Behavior Studies,humanities_misc
+International Health,humanities_misc
+Environmental Policy and Management,humanities_misc
+Geological Engineering,humanities_misc
+Graphic Design,humanities_misc
+Canadian Studies,humanities_misc
+Occupational Safety and Health Technology,humanities_misc
+Cell Biology and Anatomy,humanities_misc
+Quantitative Research Methods,humanities_misc
+Plant Genetics,humanities_misc
+Computational Mechanics With Application To Material Properties,humanities_misc
+Genetic Counseling,humanities_misc
+Real Estate Development,humanities_misc
+Law and Business,humanities_misc
+Clinical and Experimental Therapeutics,humanities_misc
+Organizational Leadership,humanities_misc
+Agricultural Economics,humanities_misc
+Forestry,humanities_misc
+Interior Architecture,humanities_misc
+Applied Life Science,humanities_misc
+Health Technology,humanities_misc
+Food Preparation,humanities_misc
+Public Relations,humanities_misc
+Modern Languages,humanities_misc
+Mechanics and Repairers General,humanities_misc
+Studio Arts,humanities_misc
+Anatomy,humanities_misc
+Health Physics Technology,humanities_misc
+Agricultural Production,humanities_misc
+Public Finance,humanities_misc
+Language Interpretation and Translation,humanities_misc
+Early Childhood Education,humanities_misc
+Accounting and Taxation,humanities_misc
+Sales and Marketing Education,humanities_misc
+Business and Technology,humanities_misc
+Financial Services Marketing Operations,humanities_misc
+Physiology,humanities_misc
+Music Theory and Composition,humanities_misc
+Film Production,humanities_misc
+Environment Sustainability and Society,humanities_misc
+Design and Technical Production,humanities_misc
+Wood Science and Wood Products Technology,humanities_misc
+Occupational Health and Industrial Hygiene,humanities_misc
+Research Methodology and Quantitative Methods,humanities_misc
+Curriculum and Instruction,humanities_misc
+Nursing Practice,humanities_misc
+Information Science,humanities_misc
+Data Science and Data Analytics,humanities_misc
+Management Information Systems,humanities_misc
+Mechatronics Robotics and Automation Engineering,humanities_misc
+Artificial Intelligence,data_ai
+Nutrition Sciences,humanities_misc
+Civil and Environmental Engineering,humanities_misc
+Project Management,humanities_misc
+Electrical Engineering,humanities_misc
+Public Health,humanities_misc
+Marketing ,humanities_misc
+Health Information Technology,humanities_misc
+Culinary Science,humanities_misc
+Food Science,humanities_misc
+Computational Science,humanities_misc
+Cartography,humanities_misc
+Analytics and Modeling,humanities_misc
+Engineering Design,humanities_misc
+Computer Systems Engineering,humanities_misc
+Telecommunications Engineering and Technology,humanities_misc
+Informatics,it_systems
+Genomics,humanities_misc
+Design and Applied Arts,humanities_misc
+Media Studies,humanities_misc
+Game Design and Development,humanities_misc
+Finance and Investment,humanities_misc
+Construction Engineering,humanities_misc
+Biomedical Sciences,humanities_misc
+Electrical Electronics and Communications Engineering,humanities_misc
+Psychology,humanities_misc
+Pharmaceutical Sciences,humanities_misc
+Automation Engineer Technology,humanities_misc
+Telecommunications Systems and Networks,humanities_misc
+Mathematics,humanities_misc
+Computer and Information Sciences General,humanities_misc
+Energy Systems Engineering,humanities_misc
+Renewable Energy,humanities_misc
+Taxation,humanities_misc
+Process Engineering,humanities_misc
+Communication Sciences and Disorders,humanities_misc
+Science Technology and Society,humanities_misc
+Bachelor of Business Administration,humanities_misc
+Economics,humanities_misc
+Network and System Administration,humanities_misc
+Architectural and Building Sciences Technology,humanities_misc
+Environmental Design,humanities_misc
+Biomedical Informatics,humanities_misc
+Machine Tool Technology,humanities_misc
+Health Informatics and Management Systems,humanities_misc
+Architectural Engineering,humanities_misc
+Building Construction Technology,humanities_misc
+Environment and Sustainability,humanities_misc
+Geography,humanities_misc
+Wireless and Optical Communications,humanities_misc
+Environmental Mining,humanities_misc
+Database Administration Computer Science,humanities_misc
+Natural Sciences,humanities_misc
+Astronomy,humanities_misc
+Physics,humanities_misc
+Cellular and Molecular Biology,humanities_misc
+Design and Visual Communications,humanities_misc
+Pastoral Counseling,humanities_misc
+Urban Studies,humanities_misc
+Communications Systems Technology,humanities_misc
+Film Studies,humanities_misc
+Law and Legal Studies,humanities_misc
+Plant Sciences,humanities_misc
+New Media Art,humanities_misc
+Teacher Education Multiple Levels,humanities_misc
+Laser and Optical Engineering,humanities_misc
+Architecture and Graphic and Information Design,humanities_misc
+Education Administration and Supervision,humanities_misc
+Molecular Biology,humanities_misc
+Database Management,humanities_misc
+Bioprocess Technology,humanities_misc
+Physical Education Teaching and Coaching,humanities_misc
+Medicinal and Pharmaceutical Chemistry,humanities_misc
+Integrated Circuit Design,humanities_misc
+Quantum Technologies,humanities_misc
+Exercise Science,humanities_misc
+Nanotechnology,humanities_misc
+Sports Business and Management,humanities_misc
+Sports Science,humanities_misc
+Urban Development Planning,humanities_misc
+Human Sciences,humanities_misc
+Mechanical and Mechatronics Engineering,humanities_misc
+Power Systems Engineering,humanities_misc
+Clinical Psychology,humanities_misc
+Modeling Virtual Environments and Simulation,humanities_misc
+Mathematics and Computer Science,humanities_misc
+Linguistics,humanities_misc
+Criminal Justice,humanities_misc
+Parasitology,humanities_misc
+Manufacturing Engineering Technology,humanities_misc
+Agricultural and Food Products Processing,humanities_misc
+Toxicology,humanities_misc
+Polymer and Plastics Engineering,humanities_misc
+Political Science,humanities_misc
+Marine and Coastal Sciences,humanities_misc
+Radiography,humanities_misc
+Digital Image Processing,humanities_misc
+Health Management and Clinical Assistance,humanities_misc
+Polymer Engineering,humanities_misc
+Operations Project Management,humanities_misc
+Educational Technology,humanities_misc
+Business Communication,humanities_misc
+Security Studies,humanities_misc
+Animal Sciences,humanities_misc
+Occupational Therapy,humanities_misc
+Graphics Visualization and Computational Fabrication,humanities_misc
+Knowledge Management,humanities_misc
+Educational Instructional and Curriculum Supervision,humanities_misc
+Rehabilitation Science,humanities_misc
+History,humanities_misc
+Business Computing,humanities_misc
+Automotive Technology,humanities_misc
+Journalism,humanities_misc
+Professional Studies,humanities_misc
+Sustainability Studies,humanities_misc
+Technology Leadership and Management,humanities_misc
+Molecular Genetics,humanities_misc
+Fine and Studio Art,humanities_misc
+Vision Science,humanities_misc
+International Law,humanities_misc
+Energy and Environmental Law,humanities_misc
+Biochemistry Biophysics and Molecular Biology,humanities_misc
+Communications Technologies,humanities_misc
+Acoustics,humanities_misc
+Metallurgical Engineering,humanities_misc
+Chemical Education,humanities_misc
+Digital Learning Education,humanities_misc
+Ancient Studies,humanities_misc
+Commerce,humanities_misc
+School Counseling,humanities_misc
+Developmental Psychology,humanities_misc
+Speech Language Pathology and Audiology,humanities_misc
+Furniture Design and Manufacturing,humanities_misc
+Facilities Planning and Management,humanities_misc
+Fashion Merchandising,humanities_misc
+Geophysics and Seismology,humanities_misc
+Creative Industries,humanities_misc
+Executive Management Mba,humanities_misc
+Construction Technology,humanities_misc
+Dramatics,humanities_misc
+Marriage and Family Therapy,humanities_misc
+Social Sciences,humanities_misc
+Innovation Engineering,humanities_misc
+Science and Policy,humanities_misc
+Energy Sources and Systems,humanities_misc
+Architectural Technology,humanities_misc
+Child Development,humanities_misc
+Greenhouse Management,humanities_misc
+Soil Science,humanities_misc
+Air Transportation,humanities_misc
+Anthropology,humanities_misc
+Computer Science,cs_core
+Cybersecurity,humanities_misc
+Civil Engineering,humanities_misc
+Business Analytics,humanities_misc
+Statistics,data_ai
+Analytics and Information Management,humanities_misc
+Software Engineering,humanities_misc
+Mental Health Counseling,humanities_misc
+Electrical and Electronics Engineering,humanities_misc
+Business Administration and Management,humanities_misc
+Health Care,humanities_misc
+Management Science,humanities_misc
+Engineering Material,humanities_misc
+Restaurant and Culinary Management,humanities_misc
+Signal Geospatial Intelligence,humanities_misc
+Automotive Engineering,humanities_misc
+Information Studies,humanities_misc
+Enterprise Risk Management,humanities_misc
+Product Design and Development,humanities_misc
+Aerospace and Mechanical Engineering,humanities_misc
+Computer Graphics,humanities_misc
+Intelligent Systems,humanities_misc
+Systems Engineering,mechanical_industrial
+Environmental Engineering,humanities_misc
+Landscape Architecture,humanities_misc
+Pharmacy,humanities_misc
+Business Teacher Education,humanities_misc
+Wind Energy,humanities_misc
+Packaging Science,humanities_misc
+Manufacturing Engineering,humanities_misc
+Global Studies,humanities_misc
+Mining and Mineral Engineering,humanities_misc
+Library and Information Science,humanities_misc
+Music,humanities_misc
+Sustainable Energy,humanities_misc
+Biological Biosystems Engineering,humanities_misc
+Chemical Petroleum,humanities_misc
+Engineering and Technology,humanities_misc
+Agriculture General,humanities_misc
+Atmospheric Chemistry and Climatology,humanities_misc
+Astrophysics,humanities_misc
+Computer Forensics,humanities_misc
+International Business,humanities_misc
+Health Communication,humanities_misc
+Accounting and Finance,humanities_misc
+Creative Arts and Practice,humanities_misc
+Biological Science,humanities_misc
+Nonprofit and Non Governmental Organizations,humanities_misc
+Clinical Nurse Leader,humanities_misc
+Optics,humanities_misc
+Instructional Design,humanities_misc
+Biosciences,humanities_misc
+Innovation Leadership Engineering Entrepreneurship,humanities_misc
+Games and Interactivity,humanities_misc
+Biostatistics,humanities_misc
+Biochemistry,humanities_misc
+Computational Biology,humanities_misc
+Applied Behavior Analysis,humanities_misc
+Urban Planning and Public Administration,humanities_misc
+Aviation Management,humanities_misc
+Education of The Learning Disabled,humanities_misc
+Clinical Research,humanities_misc
+Digital Arts,humanities_misc
+Organization Development,humanities_misc
+International Marketing,humanities_misc
+Sports and Fitness Administration,humanities_misc
+Health and Physical Fitness,humanities_misc
+Philosophy and Religious Studies General,humanities_misc
+Agricultural Engineering,humanities_misc
+Environmental Studies,humanities_misc
+Dental Science,humanities_misc
+Family Practice Nurse Practitioner,humanities_misc
+Solar Energy Technology,humanities_misc
+American Studies,humanities_misc
+Games and Entertainment Design,humanities_misc
+Religious Studies,humanities_misc
+Ecology,humanities_misc
+Actuarial Science,humanities_misc
+Ocean Engineering,humanities_misc
+Language Literature and Cultural Studies,humanities_misc
+French,humanities_misc
+Computer Science Mathematical Sciences,humanities_misc
+Conducting,humanities_misc
+Econometrics and Quantitative Economics,humanities_misc
+Geotechnical and Geo Environmental Engineering,humanities_misc
+Public Health Education,humanities_misc
+Sociology,humanities_misc
+Welding Engineering Technology,humanities_misc
+Global Sustainable Development,humanities_misc
+Microbiology,humanities_misc
+Electrical Engineering Technology,humanities_misc
+Accountancy,humanities_misc
+Technology and International Affairs,humanities_misc
+Land Use Planning,humanities_misc
+International Studies,humanities_misc
+Arts General,humanities_misc
+Translational Research,humanities_misc
+Exercise Physiology,humanities_misc
+Counselor Education,humanities_misc
+Counseling Psychology,humanities_misc
+Physician Assistance,humanities_misc
+Architectural Drafting,humanities_misc
+Marketing Research,humanities_misc
+Real Estate,humanities_misc
+Military Applied Sciences,humanities_misc
+Biophysics,humanities_misc
+Web Management,humanities_misc
+English,humanities_misc
+Human Nutrition,humanities_misc
+Advertising,humanities_misc
+Labor and Industrial Relations,humanities_misc
+Agronomy and Crop Science,humanities_misc
+Systematic Biology,humanities_misc
+Medicine and Surgery(MBBS),humanities_misc
+Recording Arts Technology,humanities_misc
+Water Wetlands and Marine Resources Management,humanities_misc
+Radio and Television Broadcasting Technology,humanities_misc
+Plant Pathology,humanities_misc
+Physical Sciences,humanities_misc
+Biomedical Technology,humanities_misc
+Health Promotion,humanities_misc
+Industrial Technology,humanities_misc
+Computer Programming General,humanities_misc
+Learning Sciences,humanities_misc
+Management Studies,humanities_misc
+Pharmaceutical Marketing and Management,humanities_misc
+Environmental System,humanities_misc
+Business Data Analysis and Forecasting,humanities_misc
+Sports Studies,humanities_misc
+Elementary School Teaching,humanities_misc
+Forensic Psychology,humanities_misc
+Interior Design,humanities_misc
+Intellectual Property,humanities_misc
+Environment Resources and Sustainability,humanities_misc
+Art Education,humanities_misc
+Aerospace Engineering Technology,humanities_misc
+German,humanities_misc
+Ecommerce,humanities_misc
+Voice and Opera,humanities_misc
+Engineering Practice,humanities_misc
+Marine Biology,humanities_misc
+Global Development and Social Justice Ma,humanities_misc
+Microbial Biotechnology,humanities_misc
+Applied Biological Sciences,humanities_misc
+Publishing,humanities_misc
+Advanced Drug,humanities_misc
+Politics and Contemporary History,humanities_misc
+Telecommunications Management,humanities_misc
+Bba,humanities_misc
+Cultural Resource Management,humanities_misc
+Theoretical and Mathematical Physics,humanities_misc
+Animal and Veterinary Science,humanities_misc
+Computer Software Technology,humanities_misc
+Cell Physiology,humanities_misc
+Arts Management and Arts Entrepreneurship,humanities_misc
+Engineering Management Mem,humanities_misc
+Operations Management,humanities_misc
+Higher Education Administration,humanities_misc
+Logistics and Supply Chain Management,humanities_misc
+Industrial Engineering,humanities_misc
+Computer and Information Systems,humanities_misc
+Engineering Mechanics,humanities_misc
+Computer Engineering,humanities_misc
+Finance ,humanities_misc
+Chemical Engineering,humanities_misc
+Epidemiology,humanities_misc
+Electrical and Computer Engineering,humanities_misc
+Architecture,civil_arch
+Cognitive Psychology and Psycholinguistics,humanities_misc
+Technology Innovation and Entrepreneurship,humanities_misc
+Mba,business
+Web Development,humanities_misc
+ Financial Management,humanities_misc
+Chemistry,humanities_misc
+Robotics Technology,humanities_misc
+Human Factors and Ergonomics,humanities_misc
+Education,humanities_misc
+Data Analytics and Quantitative Analysis,humanities_misc
+Business General,humanities_misc
+Digital Communications and Multimedia,humanities_misc
+Computational Mathematics,humanities_misc
+Computer Networking and Telecommunications,humanities_misc
+Drafting and Design Technology,humanities_misc
+Drug Discovery and Regulatory Affairs,humanities_misc
+Clinical Regulatory Affairs,humanities_misc
+Telecommunications Technology,humanities_misc
+Management and Business Analytics,humanities_misc
+Biology General,humanities_misc
+Structural Engineering,humanities_misc
+Game Programming,humanities_misc
+Neuroscience,humanities_misc
+Development Economics and International Development,humanities_misc
+Computer Aided Drafting and Design,humanities_misc
+Urban Community and Regional Planning,humanities_misc
+Laws,humanities_misc
+Marine Engineering and Naval Architecture,humanities_misc
+Information Technology Project Management,humanities_misc
+Health Administration,humanities_misc
+Foods Nutrition and Wellness Studies,humanities_misc
+Molecular Pharmacology,humanities_misc
+Quality Management Systems,humanities_misc
+Theater Arts,humanities_misc
+Community Development,humanities_misc
+Technical and Scientific Communication,humanities_misc
+Immunology,humanities_misc
+Health Policy Analysis,humanities_misc
+Health Care Leadership,humanities_misc
+Public Policy Analysis,humanities_misc
+Transportation and Highway Engineering,humanities_misc
+Chemical and Biological Engineering,humanities_misc
+Aeronautical Engineering,humanities_misc
+Communication General,humanities_misc
+Mining Engineering,humanities_misc
+Applied Psychology,humanities_misc
+Photography,humanities_misc
+Multi  Interdisciplinary Studies General,humanities_misc
+Hazardous Materials Management and Waste Technology,humanities_misc
+It Strategy and Digital Transformation,humanities_misc
+Engineering Physics,humanities_misc
+Analytical Chemistry,humanities_misc
+Biometrics,humanities_misc
+Adult and Technical Education,humanities_misc
+Games Technology,humanities_misc
+Advanced Manufacturing and Quality Control Technologies Focused On Composition Properties and Integrity of Materials,humanities_misc
+Arts and Entertainment Management,humanities_misc
+Race and Ethnicity,humanities_misc
+Development Studies,humanities_misc
+Cognitive Science,humanities_misc
+Product Innovation and Computing,humanities_misc
+Visual and Performing Arts General,humanities_misc
+Polymer Chemistry,humanities_misc
+Earth Science,humanities_misc
+Humanities,humanities_misc
+Music Technology,humanities_misc
+Geosciences,humanities_misc
+Strategic Management,humanities_misc
+Biochemical Engineering,humanities_misc
+Ecology and Evolutionary Biology,humanities_misc
+Maritime Studies,humanities_misc
+Environmental Control Technologies,humanities_misc
+Atomic and Molecular Physics,humanities_misc
+Textile Sciences and Engineering,humanities_misc
+Water Quality and Wastewater Treatment,humanities_misc
+Business and Marketing Management,humanities_misc
+Broadcast Journalism,humanities_misc
+Complementary Integrative Healthcare,humanities_misc
+Latin American Studies,humanities_misc
+Digital and Social Media Marketing,humanities_misc
+International Finance,humanities_misc
+Physical Therapy,humanities_misc
+Design Innovation Management,humanities_misc
+Sustainable Business,humanities_misc
+Accounting and Analytics,humanities_misc
+Poultry Science,humanities_misc
+Machine Shop Technology,humanities_misc
+Multimedia,humanities_misc
+Molecular Biochemistry,humanities_misc
+Computational and Medicinal Chemistry,humanities_misc
+Agribusiness Operations,humanities_misc
+Horticultural Science,humanities_misc
+Coaching and Talent Development,humanities_misc
+Community Health and Preventive Medicine,humanities_misc
+Directed Energy Systems,humanities_misc
+International Policy Analysis,humanities_misc
+School Psychology,humanities_misc
+Railroad and Railway Transportation,humanities_misc
+Management Information System Mis,humanities_misc
+Aerospace Education,humanities_misc
+Astronautics and Space Engineering,humanities_misc
+Psychological Method,humanities_misc
+Culture and Heritage,humanities_misc
+Human Development and Family Studies,humanities_misc
+Industrial Maintenance Technology,humanities_misc
+Semiconductor Manufacturing Technology,humanities_misc
+Liberal Arts and Sciences,humanities_misc
+Mobile and Web Application Development,humanities_misc
+Medical Physics,humanities_misc
+Family and Consumer Sciences,humanities_misc
+Earth Systems Environmental Science Technology,humanities_misc
+Animation and Special Effects,humanities_misc
+Fiber Textile and Weaving Arts,humanities_misc
+Regional Studies,humanities_misc
+Hydrology and Water Resources Science,humanities_misc
+Emergency Management Homeland Security,humanities_misc
+Advertising Public Relations and Media Design,humanities_misc
+Premedicine,humanities_misc
+Community Psychology,humanities_misc
+Hospitality Administration and Management,humanities_misc
+Emerging Media,humanities_misc
+Computer Systems Analysis,humanities_misc
+Apparel and Textile Manufacture,humanities_misc
+Event Management,humanities_misc
+Special Education,humanities_misc
+Operational Oceanography,humanities_misc
