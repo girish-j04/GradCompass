@@ -17,6 +17,7 @@ import ProfileSetupPage from './pages/ProfileSetupPage';
 import WorkExperiencePage from './pages/WorkExperiencePage';
 import VisaInterviewPage from './pages/VisaInterviewPage';
 import FinancePlannerPage from './pages/FinancePlannerPage';
+import UniversityMatcherPage from './pages/UniversityMatcherPage';
 
 // Protected Route Component
 function ProtectedRoute({ children }) {
@@ -152,6 +153,15 @@ function App() {
             element={
               <ProtectedRoute>
                 <FinancePlannerPage />
+              </ProtectedRoute>
+            } 
+          />
+          
+          <Route 
+            path="/matcher" 
+            element={
+              <ProtectedRoute>
+                <UniversityMatcherPage />
               </ProtectedRoute>
             } 
           />
