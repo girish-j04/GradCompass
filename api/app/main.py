@@ -5,10 +5,10 @@ import traceback
 import logging
 from app.config import settings
 from app.database import create_tables, close_database
-from app.routers import auth, profile, interview, cost_research  # Added cost_research import
+from app.routers import auth, profile, interview, cost_research, matching
 
 # Import models to register them with SQLAlchemy
-from app.models import user, profile as profile_models, interview as interview_models
+from app.models import user, profile as profile_models, interview as interview_models, matching as matching_models
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -50,7 +50,8 @@ async def global_exception_handler(request: Request, exc: Exception):
 app.include_router(auth.router)
 app.include_router(profile.router)
 app.include_router(interview.router)
-app.include_router(cost_research.router)  # Added cost research router
+app.include_router(cost_research.router)
+app.include_router(matching.router)
 
 # Startup and shutdown events
 @app.on_event("startup")
@@ -90,12 +91,14 @@ async def get_api_status():
             "auth": "active",
             "profile": "active", 
             "interview": "active",
-            "cost_research": "active"  # Added cost research service status
+            "cost_research": "active",
+            "matching": "active"
         },
         "endpoints": {
             "auth": "/auth/*",
             "profile": "/profile/*",
             "interview": "/interview/*", 
-            "cost_research": "/cost-research/*"  # Added cost research endpoints
+            "cost_research": "/cost-research/*",
+            "matching": "/matching/*"
         }
     }
