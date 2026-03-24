@@ -37,3 +37,10 @@ httpx==0.28.1
 
 # Production
 gunicorn==21.2.0
+
+# ML / Matching
+pandas==2.2.3
+numpy==1.26.4
+scikit-learn==1.5.2
+lightgbm==4.5.0
+joblib==1.4.2
