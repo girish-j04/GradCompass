@@ -15,6 +15,7 @@ from app.database import engine, Base
 from app.models.user import User
 from app.models.profile import UserProfile, WorkExperience
 from app.models.interview import InterviewSession, InterviewMessage
+from app.models.matching import Program, ProgramStats, MatchRun, MatchResult
 
 async def create_tables():
     """Create all tables in the database"""

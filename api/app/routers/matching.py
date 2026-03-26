@@ -5,7 +5,7 @@ from typing import List
 from app.database import get_database
 from app.models.matching import MatchRequest, MatchRunResponse, ProfileFeaturesResponse
 from app.models.user import User
-from app.routers.auth import get_current_active_user
+from app.utils.auth import get_current_user
 from app.services.matching_service import matching_service_instance
 
 router = APIRouter(
@@ -17,7 +17,7 @@ router = APIRouter(
 @router.post("/run", response_model=MatchRunResponse, status_code=status.HTTP_200_OK)
 async def run_university_match(
     request: MatchRequest,
-    current_user: User = Depends(get_current_active_user),
+    current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_database)
 ):
     """
@@ -56,7 +56,7 @@ async def run_university_match(
 
 @router.get("/profile-features", response_model=ProfileFeaturesResponse)
 async def get_profile_features(
-    current_user: User = Depends(get_current_active_user),
+    current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_database)
 ):
     """

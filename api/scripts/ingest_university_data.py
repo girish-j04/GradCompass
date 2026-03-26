@@ -16,7 +16,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from sqlalchemy.future import select
 from sqlalchemy.dialects.postgresql import insert as pg_insert
 
-from app.database import AsyncSessionLocal, engine, Base
+from app.database import async_session_maker, engine, Base
 from app.models.matching import Program, ProgramStats
 
 DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "university_matcher")
@@ -55,7 +55,7 @@ async def ingest():
     stats_df = stats_df.drop_duplicates(subset="program_id")
     stats_lookup = stats_df.set_index("program_id").to_dict("index")
 
-    async with AsyncSessionLocal() as db:
+    async with async_session_maker() as db:
         # --- Programs ---
         print(f"Upserting {len(prog_df)} programs ...")
         for _, row in prog_df.iterrows():
