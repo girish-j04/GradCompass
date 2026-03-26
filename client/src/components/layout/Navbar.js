@@ -38,7 +38,6 @@ function Navbar() {
     { name: 'Dashboard', href: '/dashboard', icon: ChartBarIcon },
     { name: 'Profile Setup', href: '/profile/setup', icon: UserIcon },
     { name: 'Work Experience', href: '/profile/work-experience', icon: BriefcaseIcon },
-    { name: 'University Matcher', href: '/matcher', icon: AcademicCapIcon },
   ] : [];
 
   return (

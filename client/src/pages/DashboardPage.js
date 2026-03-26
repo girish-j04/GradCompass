@@ -128,6 +128,8 @@ function DashboardPage() {
       navigate('/visa-interview');
     } else if (agent.agentType === 'finance_planner') {
       navigate('/finance-planner');
+    } else if (agent.agentType === 'university_matcher') {
+      navigate('/matcher');
     } else {
       console.log(`Clicked on ${agent.name}`);
     }

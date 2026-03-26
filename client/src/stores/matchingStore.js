@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import axios from 'axios';
+import { useAuthStore } from './authStore';
 
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000';
 
@@ -69,7 +70,7 @@ const useMatchingStore = create((set, get) => ({
    */
   loadProfileFeatures: async () => {
     try {
-      const token = localStorage.getItem('token');
+      const token = useAuthStore.getState().token;
       const res = await axios.get(`${API_URL}/matching/profile-features`, {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -134,7 +135,7 @@ const useMatchingStore = create((set, get) => ({
         top_k:                      filters.top_k,
       };
 
-      const token = localStorage.getItem('token');
+      const token = useAuthStore.getState().token;
       const response = await axios.post(`${API_URL}/matching/run`, payload, {
         headers: { Authorization: `Bearer ${token}` },
       });
