@@ -22,7 +22,7 @@ google-generativeai==0.8.6
 langgraph==1.1.2
 
 # Search and Web Tools
-ddgs==9.11.4
+duckduckgo-search>=6.0.0
 
 # Utilities and Helpers
 pydantic==2.12.5
