@@ -9,10 +9,12 @@ import {
   AcademicCapIcon,
   ClipboardDocumentListIcon,
   CogIcon,
+  BriefcaseIcon,
   CheckCircleIcon,
   ArrowLeftIcon,
   ArrowRightIcon,
 } from '@heroicons/react/24/outline';
+import WorkExperiencePage from './WorkExperiencePage';
 import { useProfileStore } from '../stores/profileStore';
 import { useAuthStore } from '../stores/authStore';
 import { useThemeStore } from '../stores/themeStore';
@@ -103,6 +105,12 @@ const steps = [
   },
   {
     id: 3,
+    name: 'Work Experience',
+    icon: BriefcaseIcon,
+    fields: [],
+  },
+  {
+    id: 4,
     name: 'Goals & Preferences',
     icon: CogIcon,
     fields: ['target_degree', 'preferred_countries', 'target_field', 'budget_range', 'application_timeline'],
@@ -279,6 +287,9 @@ function ProfileSetupPage() {
       return greValid && toeflValid && ieltsValid;
     }
     if (currentStep === 3) {
+      return true; // Work experience is optional and managed by its own component
+    }
+    if (currentStep === 4) {
       return currentStepFields.every(field => {
         const val = watchedFields[field];
         if (Array.isArray(val)) return val.length > 0;
@@ -444,6 +455,13 @@ function ProfileSetupPage() {
         );
       
       case 3:
+        return (
+          <div className="-mx-8 -my-4">
+            <WorkExperiencePage isEmbedded={true} />
+          </div>
+        );
+      
+      case 4:
         return (
           <div className="space-y-6">
             <Controller

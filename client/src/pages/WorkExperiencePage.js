@@ -36,7 +36,7 @@ const schema = yup.object({
   description: yup.string(),
 });
 
-function WorkExperiencePage() {
+function WorkExperiencePage({ isEmbedded = false }) {
   const [showForm, setShowForm] = useState(false);
   const [editingExperience, setEditingExperience] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -159,28 +159,52 @@ function WorkExperiencePage() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-6 py-8">
+    <div className={isEmbedded ? "" : "max-w-4xl mx-auto px-6 py-8"}>
       {/* Header */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="mb-8"
-      >
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className={`text-4xl font-display font-bold ${
-              theme === 'dark' ? 'text-mocha-text' : 'text-latte-text'
-            }`}>
-              Work Experience
-            </h1>
-            <p className={`mt-2 text-lg ${
-              theme === 'dark' ? 'text-mocha-subtext0' : 'text-latte-subtext0'
-            }`}>
-              Add your professional background to strengthen your profile
-            </p>
+      {!isEmbedded && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="mb-8"
+        >
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className={`text-4xl font-display font-bold ${
+                theme === 'dark' ? 'text-mocha-text' : 'text-latte-text'
+              }`}>
+                Work Experience
+              </h1>
+              <p className={`mt-2 text-lg ${
+                theme === 'dark' ? 'text-mocha-subtext0' : 'text-latte-subtext0'
+              }`}>
+                Add your professional background to strengthen your profile
+              </p>
+            </div>
+            
+            <button
+              onClick={handleAddNew}
+              className={`inline-flex items-center px-4 py-2 rounded-lg font-medium transition-all duration-300 hover:scale-105 ${
+                theme === 'dark'
+                  ? 'bg-mocha-mauve text-mocha-crust hover:bg-mocha-pink'
+                  : 'bg-latte-mauve text-latte-base hover:bg-latte-pink'
+              }`}
+            >
+              <PlusIcon className="h-5 w-5 mr-2" />
+              Add Experience
+            </button>
           </div>
-          
+        </motion.div>
+      )}
+
+      {/* Embedded Header */}
+      {isEmbedded && (
+        <div className="flex items-center justify-between mb-6">
+          <h2 className={`text-xl font-bold ${
+            theme === 'dark' ? 'text-mocha-text' : 'text-latte-text'
+          }`}>
+            Work Experience
+          </h2>
           <button
             onClick={handleAddNew}
             className={`inline-flex items-center px-4 py-2 rounded-lg font-medium transition-all duration-300 hover:scale-105 ${
@@ -193,7 +217,7 @@ function WorkExperiencePage() {
             Add Experience
           </button>
         </div>
-      </motion.div>
+      )}
 
       {/* Experience Form Modal */}
       <AnimatePresence>
